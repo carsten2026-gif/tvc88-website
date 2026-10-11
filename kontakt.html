@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kontakt zum Traktor Veteranen Club 88 Griesheim e.V. – Schreib uns oder komm zum Stammtisch.">
+  <title>Kontakt · TVC88 Griesheim e.V.</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data/img/logo/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="data/img/logo/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="alternate icon" href="data/img/logo/favicon.ico">
+  <link rel="apple-touch-icon" href="data/img/logo/apple-touch-icon.png">
+  <style>
+    /* ── Layout ─────────────────────────────────────────── */
+    .kontakt-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    @media (max-width: 820px) { .kontakt-grid { grid-template-columns: 1fr; } }
+
+    /* ── Kontakt-Infos ──────────────────────────────────── */
+    .kontakt-info { display: flex; flex-direction: column; gap: 28px; }
+
+    .kinfo-block {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 22px 24px;
+      display: flex; gap: 18px; align-items: flex-start;
+    }
+    .kinfo-icon { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+    .kinfo-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--rust); margin-bottom: 6px; display: block;
+    }
+    .kinfo-block h3 { font-size: 15px; margin-bottom: 4px; }
+    .kinfo-block p  { font-size: 13.5px; color: var(--muted); line-height: 1.75; }
+    .kinfo-block a  { color: var(--rust); font-weight: 600; }
+    .kinfo-block a:hover { text-decoration: underline; }
+
+    /* Karte */
+    .kinfo-map {
+      border-radius: 3px; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .kinfo-map iframe {
+      display: block; width: 100%; height: 240px; border: none;
+    }
+
+    /* ── Kontaktformular ────────────────────────────────── */
+    .kontakt-form-wrap {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 32px 30px;
+    }
+    .kontakt-form-wrap h2 {
+      font-size: 22px; margin-bottom: 6px;
+    }
+    .kontakt-form-wrap h2 em { color: var(--rust); font-style: italic; }
+    .kontakt-form-wrap .sub {
+      font-size: 13.5px; color: var(--muted); margin-bottom: 24px; line-height: 1.6;
+    }
+
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 6px;
+    }
+    .form-group label .req { color: var(--rust); margin-left: 2px; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 11px 14px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      transition: border-color .18s, box-shadow .18s;
+      outline: none;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--rust);
+      box-shadow: 0 0 0 3px rgba(184,76,32,.12);
+    }
+    .form-group textarea { min-height: 130px; resize: vertical; }
+
+    .form-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+
+    .form-submit { margin-top: 24px; }
+    .form-submit .btn { width: 100%; text-align: center; padding: 15px; font-size: 14px; }
+
+    /* Formspree-Hinweis */
+    .formspree-note {
+      margin-top: 14px;
+      font-size: 11px; color: var(--muted); line-height: 1.6; text-align: center;
+    }
+    .formspree-note code {
+      background: rgba(0,0,0,.07); padding: 1px 5px;
+      border-radius: 3px; font-size: 11px;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* Erfolgs-Meldung */
+    .form-success {
+      display: none;
+      background: #e8f4ec;
+      border: 1px solid #a0c8a8;
+      border-radius: 3px;
+      padding: 20px 22px;
+      text-align: center;
+      margin-top: 16px;
+    }
+    .form-success .icon { font-size: 32px; display: block; margin-bottom: 8px; }
+    .form-success h3 { font-size: 16px; color: var(--forest); margin-bottom: 4px; }
+    .form-success p  { font-size: 13px; color: var(--muted); }
+  </style>
+  <script>const TVC_PAGE = 'kontakt';</script>
+</head>
+<body>
+
+  <!-- Navigation → js/components.js -->
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="sep">›</span>
+        <span>Kontakt</span>
+      </nav>
+      <h1>✉️ Kontakt</h1>
+      <p>Wir freuen uns über Eure Nachricht – oder kommt einfach zum Stammtisch!</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-inner">
+      <div class="kontakt-grid">
+
+        <!-- Linke Spalte: Infos + Karte -->
+        <div class="kontakt-info reveal">
+
+          <div class="kinfo-block">
+            <div class="kinfo-icon" aria-hidden="true">📧</div>
+            <div>
+              <span class="kinfo-label">E-Mail</span>
+              <h3>Allgemeine Anfragen</h3>
+              <p><a href="mailto:info@tvc88.de">info@tvc88.de</a><br>
+                 Wir antworten in der Regel innerhalb weniger Tage.</p>
+            </div>
+          </div>
+
+          <div class="kinfo-block">
+            <div class="kinfo-icon" aria-hidden="true">📍</div>
+            <div>
+              <span class="kinfo-label">Anschrift</span>
+              <h3>Traktor Veteranen Club 88<br>Griesheim e.V.</h3>
+              <p>
+                c/o 1. Vorsitzender<br>
+                Norbert Heydt<br>
+                <em style="color:var(--muted);font-style:italic;font-size:12px">
+                Lindenstrasse 14
+                64347 Griesheim
+              </p>
+            </div>
+          </div>
+
+          <div class="kinfo-block" style="background:var(--forest2)">
+            <div class="kinfo-icon" aria-hidden="true">🍺</div>
+            <div>
+              <span class="kinfo-label" style="color:var(--gold)">Stammtisch</span>
+              <h3 style="color:#fff">Persönlicher Kontakt</h3>
+              <p style="color:#8fb49a">
+                Jeden <strong style="color:var(--gold)">ersten Freitag im Monat</strong>
+                ab 19:00 Uhr im<br>
+                <strong style="color:#fff">Restaurant TuS</strong><br>
+                Jahnstraße 20 · 64347 Griesheim<br>
+                Kein Termin nötig – einfach vorbeikommen!
+              </p>
+              <a class="link-arrow" href="aktuelles-stammtisch.html"
+                 style="color:var(--gold);margin-top:10px;display:inline-flex">
+                Mehr zum Stammtisch →
+              </a>
+            </div>
+          </div>
+
+          <!-- Karte -->
+          <div class="kinfo-map">
+            <iframe
+              title="Karte: Restaurant TuS Griesheim"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=8.5630%2C49.8540%2C8.5830%2C49.8640&amp;layer=mapnik&amp;marker=49.8590%2C8.5730"
+              loading="lazy"
+              aria-label="Karte des Stammtisch-Lokals">
+            </iframe>
+          </div>
+
+        </div>
+
+        <!-- Rechte Spalte: Formular -->
+        <div class="reveal">
+          <div class="kontakt-form-wrap">
+            <h2>Schreib <em>uns</em></h2>
+            <p class="sub">
+              Fragen zur Mitgliedschaft, zu Veranstaltungen oder
+              zum Verein – wir antworten so schnell wie möglich.
+            </p>
+
+            <!--
+              FORMSPREE EINRICHTEN:
+              1. Kostenloser Account auf formspree.io anlegen
+              2. Neues Formular erstellen → Formular-ID kopieren
+              3. Im action-Attribut unten ersetzen:
+                 action="https://formspree.io/f/DEINE-ID"
+              Bis dahin öffnet der Button das E-Mail-Programm.
+            -->
+            <form id="kontakt-form"
+                  action="https://formspree.io/f/DEINE-FORMSPREE-ID"
+                  method="POST"
+                  novalidate>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="vorname">Vorname <span class="req">*</span></label>
+                  <input type="text" id="vorname" name="vorname"
+                         placeholder="Max" required autocomplete="given-name">
+                </div>
+                <div class="form-group">
+                  <label for="nachname">Nachname <span class="req">*</span></label>
+                  <input type="text" id="nachname" name="nachname"
+                         placeholder="Mustermann" required autocomplete="family-name">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="email">E-Mail-Adresse <span class="req">*</span></label>
+                <input type="email" id="email" name="email"
+                       placeholder="max@beispiel.de" required autocomplete="email">
+              </div>
+
+              <div class="form-group">
+                <label for="betreff">Betreff <span class="req">*</span></label>
+                <select id="betreff" name="betreff" required>
+                  <option value="" disabled selected>Bitte wählen …</option>
+                  <option>Mitgliedschaft / Aufnahme</option>
+                  <option>Veranstaltungen &amp; Termine</option>
+                  <option>Fahrzeuge &amp; Sammlung</option>
+                  <option>Stammtisch</option>
+                  <option>Presse &amp; Medien</option>
+                  <option>Sonstiges</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="nachricht">Nachricht <span class="req">*</span></label>
+                <textarea id="nachricht" name="nachricht"
+                          placeholder="Eure Nachricht an uns …"
+                          required></textarea>
+              </div>
+
+              <div class="form-submit">
+                <button type="submit" class="btn btn-primary">
+                  Nachricht senden →
+                </button>
+              </div>
+
+              <p class="formspree-note">
+                * Pflichtfelder · Keine Weitergabe an Dritte ·
+                <a href="datenschutz.html">Datenschutz</a><br>
+                <em>Formular-Backend: Formspree ID in
+                <code>kontakt.html</code> eintragen</em>
+              </p>
+            </form>
+
+            <div class="form-success" id="form-success">
+              <span class="icon">✅</span>
+              <h3>Nachricht gesendet!</h3>
+              <p>Wir melden uns so schnell wie möglich.<br>
+                 Alternativ gerne auch direkt beim nächsten Stammtisch.</p>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.kontakt-grid -->
+    </div>
+  </section>
+
+  <!-- Footer → js/components.js -->
+
+  <script src="js/components.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+      });
+    }, { threshold: 0.07 });
+    document.querySelectorAll('.reveal').forEach(function (el) { ro.observe(el); });
+
+    /* Formular-Handling:
+       Wenn Formspree noch nicht eingerichtet → Fallback auf mailto */
+    var form = document.getElementById('kontakt-form');
+    form.addEventListener('submit', function (e) {
+      var action = form.getAttribute('action');
+
+      /* Solange Platzhalter-ID → mailto-Fallback */
+      if (action.includes('DEINE-FORMSPREE-ID')) {
+        e.preventDefault();
+        var vorname  = document.getElementById('vorname').value;
+        var nachname = document.getElementById('nachname').value;
+        var email    = document.getElementById('email').value;
+        var betreff  = document.getElementById('betreff').value;
+        var nachricht = document.getElementById('nachricht').value;
+        if (!vorname || !email || !betreff || !nachricht) {
+          alert('Bitte alle Pflichtfelder ausfüllen.');
+          return;
+        }
+        var mailto = 'mailto:info@tvc88.de'
+          + '?subject=' + encodeURIComponent('[TVC88-Kontakt] ' + betreff)
+          + '&body=' + encodeURIComponent(
+              'Von: ' + vorname + ' ' + nachname + '\n'
+            + 'E-Mail: ' + email + '\n\n'
+            + nachricht
+          );
+        window.location.href = mailto;
+        return;
+      }
+
+      /* Mit Formspree → Erfolgs-Meldung zeigen */
+      e.preventDefault();
+      fetch(action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(function (res) {
+        if (res.ok) {
+          form.style.display = 'none';
+          document.getElementById('form-success').style.display = 'block';
+        }
+      });
+    });
+  });
+  </script>
+</body>
+</html>

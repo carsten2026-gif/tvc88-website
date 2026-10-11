@@ -1,0 +1,74 @@
+TVC88 GRIESHEIM — Fertige Website
+===================================
+Version: FINAL · Alle Seiten vollständig
+
+DATEISTRUKTUR
+-------------
+index.html                   → Startseite
+aktuelles-news.html          → News & Berichte
+aktuelles-termine.html       → Termine & Veranstaltungen
+aktuelles-stammtisch.html    → Stammtisch-Info
+aktuelles-presse.html        → Presseberichte
+verein-geschichte.html       → Vereinschronik / Zeitstrahl
+verein-vorstand.html         → Vorstandsmitglieder
+verein-mitglied.html         → Mitglied werden + FAQ
+fahrzeuge-traktoren.html     → Traktorensammlung
+fahrzeuge-einachser.html     → Einachser
+fahrzeuge-automobile.html    → Automobile
+fahrzeuge-zweiraeder.html    → Zweiräder / Motorräder
+galerie.html                 → Bildergalerie mit Lightbox
+kontakt.html                 → Kontaktformular + Karte
+impressum.html               → Impressum (§ 5 TMG)
+datenschutz.html             → Datenschutzerklärung (DSGVO)
+
+css/style.css                → Haupt-Design (Farben, Layout)
+css/fahrzeuge.css            → Fahrzeugseiten-Stile
+css/verein.css               → Vereinsseiten-Stile (Zeitstrahl, Vorstand)
+js/components.js             → Navigation + Footer (zentral)
+js/main.js                   → Startseiten-Logik
+js/fahrzeuge.js              → Fahrzeug-Rendering
+
+data/news.js                 → NEWS HIER PFLEGEN
+data/termine.js              → TERMINE HIER PFLEGEN
+data/fahrzeuge.js            → FAHRZEUGE HIER PFLEGEN
+data/galerie.js              → GALERIE HIER PFLEGEN
+data/verein.js               → VORSTAND & CHRONIK hier pflegen
+data/presse.js               → PRESSEBERICHTE hier pflegen
+
+img/                         → Alle Bilder hier ablegen
+  news/                      → Bilder für Beiträge
+  galerie/2025/              → Galeriefotos nach Jahr
+  galerie/2024/
+  fahrzeuge/                 → Fahrzeugfotos
+  aufnahmeformular.pdf       → Aufnahmeformular hier ablegen
+  satzung.pdf                → Satzung hier ablegen
+
+INHALTE PFLEGEN
+---------------
+NEWS: data/news.js öffnen → Eintrag oben hinzufügen → hochladen
+TERMINE: data/termine.js → Eintrag hinzufügen → hochladen
+FAHRZEUGE: data/fahrzeuge.js → in der richtigen Kategorie ergänzen
+GALERIE: Foto in img/galerie/JAHR/ legen → data/galerie.js eintragen
+VORSTAND: data/verein.js → TVC_VORSTAND-Array anpassen
+PRESSE: data/presse.js → Eintrag oben hinzufügen
+
+VOR DEM ONLINE-GEHEN AUSFÜLLEN
+--------------------------------
+1. impressum.html  → gelb markierte Felder (Adresse, VR-Nummer, Tel.)
+2. kontakt.html    → Formspree-ID einsetzen (oder leer lassen für mailto)
+3. img/aufnahmeformular.pdf  → echtes PDF ablegen
+4. img/satzung.pdf           → echte Satzung ablegen
+
+FORMSPREE (kostenloses Kontaktformular)
+---------------------------------------
+1. Konto anlegen: formspree.io
+2. Neues Formular → ID kopieren (sieht aus wie: xyzabcde)
+3. In kontakt.html Zeile suchen: DEINE-FORMSPREE-ID
+4. ID ersetzen → Datei speichern → hochladen → fertig!
+
+HOCHLADEN (FTP)
+---------------
+Programm: FileZilla (kostenlos, filezilla-project.org)
+Alle Dateien in das Stammverzeichnis des Webservers hochladen.
+index.html muss im Wurzelverzeichnis liegen (nicht in einem Unterordner).
+

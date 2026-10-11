@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Termine und Veranstaltungen des Traktor Veteranen Club 88 Griesheim e.V. – Treffen, Ausfahrten und Stammtisch-Dates auf einen Blick.">
+  <title>Termine · TVC88 Griesheim e.V.</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data/img/logo/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="data/img/logo/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="alternate icon" href="data/img/logo/favicon.ico">
+  <link rel="apple-touch-icon" href="data/img/logo/apple-touch-icon.png">
+  <style>
+
+    /* ── Nächster Termin (Hero-Karte) ──────────────────────── */
+    .next-event {
+      background: var(--forest2);
+      border-radius: 3px;
+      padding: 32px 36px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      margin-bottom: 48px;
+      box-shadow: 0 4px 28px var(--shadow);
+      flex-wrap: wrap;
+    }
+    .next-event-date {
+      background: var(--rust);
+      color: #fff;
+      border-radius: 3px;
+      padding: 18px 24px;
+      text-align: center;
+      flex-shrink: 0;
+      min-width: 90px;
+    }
+    .next-event-date .day  { font-family: Georgia, serif; font-size: 48px; line-height: 1; }
+    .next-event-date .mon  { font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; margin-top: 4px; }
+    .next-event-date .yr   { font-size: 11px; opacity: .7; margin-top: 2px; }
+
+    .next-event-body { flex: 1; min-width: 200px; }
+    .next-event-eyebrow {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 8px; display: block;
+    }
+    .next-event-body h2 {
+      font-size: clamp(18px, 2.5vw, 26px);
+      color: #fff; margin-bottom: 10px; line-height: 1.25;
+    }
+    .next-event-meta {
+      display: flex; gap: 20px; flex-wrap: wrap;
+      font-size: 13px; color: #8fb49a;
+    }
+    .next-event-meta span { display: flex; align-items: center; gap: 6px; }
+    .next-event-details {
+      margin-top: 10px;
+      font-size: 12.5px;
+      color: rgba(201,146,42,.85);
+      font-style: italic;
+    }
+    .next-event-cta { flex-shrink: 0; }
+
+    /* ── Filter-Bar ─────────────────────────────────────────── */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .filter-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--muted); margin-right: 4px;
+    }
+    .filter-btn {
+      padding: 7px 16px;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--paper);
+      color: var(--muted);
+      cursor: pointer;
+      transition: background .18s, color .18s, border-color .18s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--rust); color: #fff; border-color: var(--rust);
+    }
+
+    /* ── Terminliste ────────────────────────────────────────── */
+    .termine-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .tl-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      align-items: center;
+      gap: 0;
+      overflow: hidden;
+      transition: transform .18s, box-shadow .18s;
+    }
+    .tl-card:hover { transform: translateX(4px); box-shadow: 0 4px 20px var(--shadow); }
+    .tl-card.hidden { display: none; }
+    .tl-card.vergangen { opacity: .6; }
+    .tl-card.vergangen:hover { transform: none; box-shadow: none; }
+
+    .tl-date {
+      background: var(--rust);
+      color: #fff;
+      text-align: center;
+      padding: 16px 10px;
+      height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .tl-date.gruen { background: var(--forest); }
+    .tl-date.gold  { background: var(--gold); }
+    .tl-date .day  { font-family: Georgia, serif; font-size: 26px; line-height: 1; }
+    .tl-date .mon  { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-top: 2px; }
+    .tl-date .yr   { font-size: 9px; opacity: .7; }
+
+    .tl-body { padding: 14px 20px; }
+    .tl-tag {
+      display: inline-block;
+      font-size: 9px; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 10px;
+      margin-bottom: 5px;
+      background: #e8f4ec; color: var(--forest);
+    }
+    .tl-tag.stammtisch { background: #fef0e6; color: var(--rust); }
+    .tl-tag.ausfahrt   { background: #e8f0fe; color: #1a4f9a; }
+    .tl-tag.vergangen  { background: #ede8e0; color: var(--muted); }
+
+    .tl-body h3 { font-size: 15px; line-height: 1.3; margin-bottom: 4px; }
+    .tl-body .tl-meta {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      font-size: 12px; color: var(--muted);
+      margin-top: 2px;
+    }
+    .tl-body .tl-meta span { display: flex; align-items: center; gap: 4px; }
+    .tl-body .tl-details {
+      margin-top: 5px;
+      font-size: 12px; color: var(--gold);
+      font-style: italic;
+    }
+    .tl-wday {
+      font-size: 10px; color: var(--muted);
+      font-weight: 600; letter-spacing: .06em;
+      text-transform: uppercase; margin-bottom: 3px;
+    }
+
+    .tl-action {
+      padding: 14px 20px;
+      flex-shrink: 0;
+    }
+    .tl-action a {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--rust);
+      display: inline-flex; align-items: center; gap: 4px;
+      white-space: nowrap;
+      transition: gap .15s;
+    }
+    .tl-action a:hover { gap: 8px; }
+
+    @media (max-width: 600px) {
+      .tl-card { grid-template-columns: 70px 1fr; }
+      .tl-action { display: none; }
+    }
+
+    /* ── Monats-Trennlinie ──────────────────────────────────── */
+    .month-divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 28px 0 14px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .month-divider::before,
+    .month-divider::after {
+      content: ''; flex: 1;
+      height: 1px; background: var(--border);
+    }
+
+    /* ── Vergangene Termine (Toggle) ────────────────────────── */
+    .vergangen-toggle {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+    .vergangen-toggle h3 {
+      font-size: 14px; color: var(--muted);
+      font-family: inherit; font-weight: 700;
+    }
+    .toggle-btn {
+      background: none;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--muted); cursor: pointer;
+      transition: background .18s, color .18s;
+    }
+    .toggle-btn:hover { background: var(--wheat); }
+    #vergangen-liste { display: none; margin-top: 16px; }
+    #vergangen-liste.open { display: flex; flex-direction: column; gap: 10px; }
+
+    /* ── Leer-Zustand ───────────────────────────────────────── */
+    .no-results {
+      text-align: center;
+      padding: 50px 20px;
+      color: var(--muted); font-size: 14px;
+    }
+    .no-results .icon { font-size: 38px; display: block; margin-bottom: 12px; }
+
+    /* ── Hinweis-Box ────────────────────────────────────────── */
+    .termin-hint {
+      background: var(--wheat);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      border-radius: 0 3px 3px 0;
+      padding: 16px 20px;
+      margin-top: 36px;
+      display: flex; gap: 12px; align-items: flex-start;
+      font-size: 13px; color: var(--muted); line-height: 1.7;
+    }
+    .termin-hint code {
+      background: rgba(0,0,0,.07); padding: 1px 5px;
+      border-radius: 3px; font-size: 12px;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* ── Zähl-Badge ─────────────────────────────────────────── */
+    .count-badge {
+      display: inline-block;
+      background: var(--rust); color: #fff;
+      font-size: 10px; font-weight: 700;
+      padding: 2px 7px; border-radius: 10px;
+      margin-left: 6px; vertical-align: middle;
+    }
+
+    /* ── Jahres-Legende rechts oben ─────────────────────────── */
+    .legend {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      align-items: center; margin-bottom: 18px;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 11px; color: var(--muted);
+    }
+    .legend-dot {
+      width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0;
+    }
+    .legend-dot.rot   { background: var(--rust); }
+    .legend-dot.gruen { background: var(--forest); }
+    .legend-dot.gold  { background: var(--gold); }
+
+  </style>
+  <script>const TVC_PAGE = 'aktuelles';</script>
+</head>
+<body>
+
+  <!-- Navigation → js/components.js -->
+
+  <!-- ═══════════════════════════════════════════════════════
+       SEITEN-HERO
+  ════════════════════════════════════════════════════════ -->
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <nav class="breadcrumb" aria-label="Brotkrümel-Navigation">
+        <a href="index.html">Home</a>
+        <span class="sep" aria-hidden="true">›</span>
+        <a href="aktuelles-news.html">Aktuelles</a>
+        <span class="sep" aria-hidden="true">›</span>
+        <span>Termine &amp; Veranstaltungen</span>
+      </nav>
+      <h1>📅 Termine &amp; Veranstaltungen</h1>
+      <p>Alle kommenden Treffen, Ausfahrten und Stammtische des TVC88 auf einen Blick.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       HAUPTINHALT
+  ════════════════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-inner">
+
+      <!-- Nächster Termin (wird dynamisch befüllt) -->
+      <div id="next-event-wrap" class="reveal"></div>
+
+      <!-- Filter -->
+      <div class="filter-bar reveal" role="group" aria-label="Termine filtern">
+        <span class="filter-label">Filtern:</span>
+        <button class="filter-btn active" data-filter="alle">Alle</button>
+        <button class="filter-btn" data-filter="stammtisch">Stammtisch</button>
+        <button class="filter-btn" data-filter="treffen">Treffen</button>
+        <button class="filter-btn" data-filter="ausfahrt">Ausfahrten</button>
+      </div>
+
+      <!-- Farb-Legende -->
+      <div class="legend reveal">
+        <div class="legend-item">
+          <div class="legend-dot rot"></div> Stammtisch
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot gruen"></div> Treffen / Veranstaltung
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot gold"></div> Ausfahrt / Sonstiges
+        </div>
+      </div>
+
+      <!-- Terminliste (wird dynamisch befüllt) -->
+      <div id="termine-liste" class="termine-list reveal"></div>
+
+      <!-- Vergangene Termine -->
+      <div class="vergangen-toggle reveal">
+        <h3>Vergangene Termine</h3>
+        <button class="toggle-btn" id="vergangen-btn" aria-expanded="false">
+          Einblenden ▾
+        </button>
+      </div>
+      <div id="vergangen-liste" class="" role="list" aria-label="Vergangene Termine"></div>
+
+      <!-- Redakteurs-Hinweis -->
+      <div class="termin-hint reveal">
+        <span aria-hidden="true" style="font-size:20px;flex-shrink:0;margin-top:1px">✏️</span>
+        <div>
+          <strong>Neuen Termin eintragen:</strong>
+          Datei <code>data/termine.js</code> öffnen, Eintrag oben hinzufügen
+          und per FTP hochladen. Vergangene Termine müssen nicht gelöscht
+          werden – die Seite sortiert automatisch.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       CTA
+  ════════════════════════════════════════════════════════ -->
+  <section id="cta-mitglied" class="reveal">
+    <h2>Beim Stammtisch dabei sein</h2>
+    <p>
+      Jeden ersten Freitag im Monat im Restaurant TuS Griesheim –
+      ohne Anmeldung, einfach vorbeikommen.
+    </p>
+    <div class="cta-buttons">
+      <a class="btn btn-white"  href="aktuelles-stammtisch.html">Stammtisch-Info →</a>
+      <a class="btn btn-ghost"  href="verein-mitglied.html">Mitglied werden</a>
+    </div>
+  </section>
+
+  <!-- Footer → js/components.js -->
+
+  <script src="data/termine.js"></script>
+  <script src="js/components.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    /* ── Scroll-Reveal ─────────────────────────────────────── */
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+      });
+    }, { threshold: 0.07 });
+    document.querySelectorAll('.reveal').forEach(function (el) { ro.observe(el); });
+
+    /* ── Hilfsfunktionen ───────────────────────────────────── */
+    if (!window.TVC_TERMINE) return;
+
+    var MONATE_KURZ = ['Jan','Feb','Mär','Apr','Mai','Jun',
+                       'Jul','Aug','Sep','Okt','Nov','Dez'];
+    var MONATE_LANG = ['Januar','Februar','März','April','Mai','Juni',
+                       'Juli','August','September','Oktober','November','Dezember'];
+    var WOCHENTAGE  = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+
+    function datumStr(iso) {
+      var d = new Date(iso);
+      return WOCHENTAGE[d.getDay()] + ', ' + d.getDate() + '. ' + MONATE_LANG[d.getMonth()] + ' ' + d.getFullYear();
+    }
+
+    function typLabel(typ) {
+      return { stammtisch: 'Stammtisch', treffen: 'Treffen',
+               ausfahrt: 'Ausfahrt', sonstiges: 'Veranstaltung' }[typ] || 'Veranstaltung';
+    }
+    function typTagClass(typ) {
+      return typ === 'stammtisch' ? 'stammtisch' : typ === 'ausfahrt' ? 'ausfahrt' : '';
+    }
+
+    /* ── Daten aufteilen ───────────────────────────────────── */
+    var heute = new Date();
+    heute.setHours(0, 0, 0, 0);
+
+    var alle  = window.TVC_TERMINE.slice().sort(function (a, b) {
+      return new Date(a.datum) - new Date(b.datum);
+    });
+
+    var kommend  = alle.filter(function (t) { return new Date(t.datum) >= heute; });
+    var vergangen = alle.filter(function (t) { return new Date(t.datum) < heute; })
+                       .reverse(); /* neueste zuerst */
+
+    /* Zähler in Filter-Button */
+    var alleBtn = document.querySelector('.filter-btn[data-filter="alle"]');
+    var badge = document.createElement('span');
+    badge.className = 'count-badge';
+    badge.textContent = kommend.length;
+    alleBtn.appendChild(badge);
+
+    /* ── Nächster Termin (Hero-Karte) ──────────────────────── */
+    var nextWrap = document.getElementById('next-event-wrap');
+
+    function renderNextEvent(liste) {
+      if (!liste || liste.length === 0) { nextWrap.innerHTML = ''; return; }
+      var t = liste[0];
+      var d = new Date(t.datum);
+      nextWrap.innerHTML = `
+<div class="next-event">
+  <div class="next-event-date">
+    <div class="day">${d.getDate().toString().padStart(2,'0')}</div>
+    <div class="mon">${MONATE_KURZ[d.getMonth()]}</div>
+    <div class="yr">${d.getFullYear()}</div>
+  </div>
+  <div class="next-event-body">
+    <span class="next-event-eyebrow">Nächster Termin</span>
+    <h2>${t.titel}</h2>
+    <div class="next-event-meta">
+      <span>📅 ${datumStr(t.datum)}</span>
+      ${t.uhrzeit ? `<span>🕐 ${t.uhrzeit}</span>` : ''}
+      <span>📍 ${t.ort}</span>
+    </div>
+    ${t.details ? `<div class="next-event-details">ℹ️ ${t.details}</div>` : ''}
+  </div>
+  <div class="next-event-cta">
+    <a class="btn btn-outline" href="aktuelles-stammtisch.html"
+       style="${t.typ !== 'stammtisch' ? 'display:none' : ''}">
+      Mehr zum Stammtisch
+    </a>
+  </div>
+</div>`;
+    }
+
+    /* ── Terminliste rendern ───────────────────────────────── */
+    var listeEl = document.getElementById('termine-liste');
+
+    function renderListe(liste) {
+      if (!liste || liste.length === 0) {
+        listeEl.innerHTML = `
+<div class="no-results">
+  <span class="icon">📭</span>
+  Keine kommenden Termine in dieser Kategorie.
+</div>`;
+        return;
+      }
+
+      /* Nach Monat gruppieren */
+      var gruppen = {};
+      liste.forEach(function (t) {
+        var d   = new Date(t.datum);
+        var key = d.getFullYear() + '-' + d.getMonth();
+        var lbl = MONATE_LANG[d.getMonth()] + ' ' + d.getFullYear();
+        if (!gruppen[key]) gruppen[key] = { label: lbl, termine: [] };
+        gruppen[key].termine.push(t);
+      });
+
+      var html = '';
+      Object.values(gruppen).forEach(function (g) {
+        html += `<div class="month-divider">${g.label}</div>`;
+        g.termine.forEach(function (t) {
+          var d     = new Date(t.datum);
+          var dcls  = t.dateifarbe === 'gruen' ? 'gruen' : t.dateifarbe === 'gold' ? 'gold' : '';
+          var wday  = WOCHENTAGE[d.getDay()];
+          html += `
+<div class="tl-card" data-typ="${t.typ}">
+  <div class="tl-date ${dcls}">
+    <div class="day">${d.getDate().toString().padStart(2,'0')}</div>
+    <div class="mon">${MONATE_KURZ[d.getMonth()]}</div>
+    <div class="yr">${d.getFullYear()}</div>
+  </div>
+  <div class="tl-body">
+    <div class="tl-wday">${wday}.</div>
+    <span class="tl-tag ${typTagClass(t.typ)}">${typLabel(t.typ)}</span>
+    <h3>${t.titel}</h3>
+    <div class="tl-meta">
+      ${t.uhrzeit ? `<span>🕐 ${t.uhrzeit}</span>` : ''}
+      <span>📍 ${t.ort}</span>
+    </div>
+    ${t.details ? `<div class="tl-details">ℹ️ ${t.details}</div>` : ''}
+  </div>
+  <div class="tl-action">
+    ${t.typ === 'stammtisch'
+      ? `<a href="aktuelles-stammtisch.html">Details →</a>`
+      : `<a href="aktuelles-termine.html#termin-${t.id}">Details →</a>`}
+  </div>
+</div>`;
+        });
+      });
+
+      listeEl.innerHTML = html;
+    }
+
+    /* ── Vergangene Termine rendern ────────────────────────── */
+    var vergangenEl = document.getElementById('vergangen-liste');
+    if (vergangen.length > 0) {
+      vergangenEl.innerHTML = vergangen.map(function (t) {
+        var d    = new Date(t.datum);
+        var dcls = t.dateifarbe === 'gruen' ? 'gruen' : t.dateifarbe === 'gold' ? 'gold' : '';
+        return `
+<div class="tl-card vergangen" style="opacity:.55">
+  <div class="tl-date ${dcls}">
+    <div class="day">${d.getDate().toString().padStart(2,'0')}</div>
+    <div class="mon">${MONATE_KURZ[d.getMonth()]}</div>
+    <div class="yr">${d.getFullYear()}</div>
+  </div>
+  <div class="tl-body">
+    <span class="tl-tag vergangen">${typLabel(t.typ)}</span>
+    <h3>${t.titel}</h3>
+    <div class="tl-meta">
+      ${t.uhrzeit ? `<span>🕐 ${t.uhrzeit}</span>` : ''}
+      <span>📍 ${t.ort}</span>
+    </div>
+  </div>
+  <div class="tl-action">
+    <span style="font-size:11px;color:var(--muted)">Abgeschlossen</span>
+  </div>
+</div>`;
+      }).join('');
+    } else {
+      document.querySelector('.vergangen-toggle').style.display = 'none';
+    }
+
+    /* ── Toggle: Vergangene anzeigen ───────────────────────── */
+    var toggleBtn = document.getElementById('vergangen-btn');
+    toggleBtn.addEventListener('click', function () {
+      var open = vergangenEl.classList.toggle('open');
+      this.textContent = open ? 'Ausblenden ▴' : 'Einblenden ▾';
+      this.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    /* ── Erstes Rendering ──────────────────────────────────── */
+    renderNextEvent(kommend);
+    renderListe(kommend);
+
+    /* ── Filter ────────────────────────────────────────────── */
+    document.querySelectorAll('.filter-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.filter-btn').forEach(function (b) {
+          b.classList.remove('active');
+        });
+        this.classList.add('active');
+
+        var f = this.dataset.filter;
+        var gefiltert = f === 'alle'
+          ? kommend
+          : kommend.filter(function (t) { return t.typ === f; });
+
+        renderNextEvent(gefiltert);
+        renderListe(gefiltert);
+      });
+    });
+
+  });
+  </script>
+</body>
+</html>

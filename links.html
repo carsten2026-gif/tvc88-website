@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Links des Traktor Veteranen Club 88 Griesheim e.V. – Stadt, Region und befreundete Vereine.">
+  <title>Links · TVC88 Griesheim e.V.</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data/img/logo/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="data/img/logo/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="alternate icon" href="data/img/logo/favicon.ico">
+  <link rel="apple-touch-icon" href="data/img/logo/apple-touch-icon.png">
+  <style>
+    .links-wrap { max-width: 780px; margin: 0 auto; }
+    .link-group {
+      background: var(--paper); border: 1px solid var(--border);
+      border-radius: 4px; padding: 26px 30px; margin-bottom: 18px;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+    .link-group h2 {
+      font-size: 15px; font-weight: 700; font-family: inherit;
+      color: var(--ink); margin-bottom: 8px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .link-list { list-style: none; margin: 0; padding: 0; }
+    .link-list li { border-bottom: 1px solid var(--border); }
+    .link-list li:last-child { border-bottom: 0; }
+    .link-list a {
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+      padding: 14px 0; text-decoration: none;
+    }
+    .link-list .lt { font-size: 15px; font-weight: 600; color: var(--rust); }
+    .link-list .ld { display: block; font-size: 13px; color: var(--muted); margin-top: 2px; font-weight: 400; }
+    .link-list .arrow { color: var(--subtle); font-size: 18px; flex-shrink: 0; transition: transform .2s; }
+    .link-list a:hover .lt { text-decoration: underline; }
+    .link-list a:hover .arrow { transform: translateX(3px); color: var(--rust); }
+    .link-empty { font-size: 14px; color: var(--muted); padding: 12px 0 2px; }
+    .link-hint { font-size: 12px; color: var(--muted); text-align: center; margin-top: 8px; }
+  </style>
+  <script>const TVC_PAGE = 'kontakt';</script>
+</head>
+<body>
+
+  <!-- Navigation → js/components.js -->
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="sep">›</span>
+        <span>Links</span>
+      </nav>
+      <h1>🔗 Links</h1>
+      <p>Interessante Seiten rund um Griesheim, Oldtimer und befreundete Vereine</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-inner">
+      <div class="links-wrap" id="links-wrap">
+        <!-- Inhalt kommt aus data/links.js -->
+      </div>
+      <p class="link-hint">Externe Links öffnen in einem neuen Fenster. Für die Inhalte externer Seiten sind deren Betreiber verantwortlich.</p>
+    </div>
+  </section>
+
+  <!-- Footer → js/components.js -->
+  <script src="data/links.js"></script>
+  <script src="js/components.js"></script>
+  <script>
+  (function () {
+    var wrap = document.getElementById('links-wrap');
+    if (!wrap || !window.TVC_LINKS) return;
+    function esc(s) {
+      return String(s).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+    wrap.innerHTML = window.TVC_LINKS.map(function (g) {
+      var items = (g.links || []).filter(function (l) { return l && l.url; });
+      var list = items.length
+        ? '<ul class="link-list">' + items.map(function (l) {
+            return '<li><a href="' + esc(l.url) + '" target="_blank" rel="noopener">' +
+              '<span><span class="lt">' + esc(l.titel) + '</span>' +
+              (l.beschreibung ? '<span class="ld">' + esc(l.beschreibung) + '</span>' : '') +
+              '</span><span class="arrow" aria-hidden="true">↗</span></a></li>';
+          }).join('') + '</ul>'
+        : '<p class="link-empty">Hier folgen in Kürze weitere Links.</p>';
+      return '<div class="link-group"><h2><span aria-hidden="true">' + esc(g.icon || '🔗') + '</span> ' +
+        esc(g.gruppe) + '</h2>' + list + '</div>';
+    }).join('');
+  })();
+  </script>
+</body>
+</html>

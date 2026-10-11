@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Traktor Veteranen Club 88 Griesheim e.V. – Wir erhalten historische Landmaschinen, Traktoren und Oldtimer in der Region Rhein-Main.">
+  <title>Traktor Veteranen Club 88 Griesheim e.V.</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data/img/logo/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="data/img/logo/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="alternate icon" href="data/img/logo/favicon.ico">
+  <link rel="apple-touch-icon" href="data/img/logo/apple-touch-icon.png">
+
+  <!-- Sagt dem Navigation-Script, welcher Menüpunkt aktiv ist -->
+  <script>const TVC_PAGE = 'home';</script>
+</head>
+<body>
+
+  <!-- Navigation wird von js/components.js eingefügt -->
+
+  <!-- ═══════════════════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════════════════ -->
+  <section id="hero" aria-label="Willkommen">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-pattern" aria-hidden="true"></div>
+    <div class="hero-skew" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-badge" aria-hidden="true">🚜 Oldtimer · Tradition · Leidenschaft</div>
+      <h1>Veteranen auf<br><em>vier Rädern</em><br>seit 1988</h1>
+      <p class="hero-sub">
+        Wir erhalten historische Landmaschinen, Traktoren und Oldtimer und
+        präsentieren sie bei Treffen und Ausstellungen in der Region Rhein-Main.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="aktuelles-termine.html">Aktuelle Termine →</a>
+        <a class="btn btn-outline" href="verein-mitglied.html">Mitglied werden</a>
+      </div>
+    </div>
+    <div class="hero-stats" aria-label="Vereinszahlen">
+      <div class="hero-stat">
+        <div class="num">36+</div>
+        <div class="lbl">Jahre dabei</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">80+</div>
+        <div class="lbl">Fahrzeuge</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">30+</div>
+        <div class="lbl">Mitglieder</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       STAMMTISCH-BANNER
+  ════════════════════════════════════════════════════════ -->
+  <div id="stammtisch-banner">
+    <div class="stammtisch-inner">
+      <div class="stammtisch-icon" aria-hidden="true">🍺</div>
+      <div class="stammtisch-text">
+        <h3>Stammtisch – jeden ersten Freitag im Monat</h3>
+        <p>
+          Ab <strong>19:00 Uhr</strong> im
+          <strong>Restaurant TuS · Jahnstraße 20 · 64347 Griesheim</strong>
+          — Gäste und Interessenten herzlich willkommen!
+        </p>
+      </div>
+      <div>
+        <a class="btn btn-outline" href="aktuelles-stammtisch.html">Mehr erfahren</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       NÄCHSTE TERMINE
+  ════════════════════════════════════════════════════════ -->
+  <section id="termine" class="section section-paper reveal">
+    <div class="section-inner">
+      <div class="section-top">
+        <div>
+          <span class="section-label">Veranstaltungskalender</span>
+          <h2 class="section-title">Nächste <em>Termine</em></h2>
+          <p class="section-desc">Aktuelle Veranstaltungen, Treffen und der monatliche Stammtisch auf einen Blick.</p>
+        </div>
+        <a class="link-arrow" href="aktuelles-termine.html">Alle Termine →</a>
+      </div>
+
+      <!-- Wird von js/main.js befüllt -->
+      <div class="termine-grid" id="termine-grid">
+        <p style="color:var(--muted)">Termine werden geladen …</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       NEWS / AKTUELLES
+  ════════════════════════════════════════════════════════ -->
+  <section id="news" class="section reveal">
+    <div class="section-inner">
+      <div class="section-top">
+        <div>
+          <span class="section-label">Neuigkeiten</span>
+          <h2 class="section-title">Aktuelles <em>aus dem Verein</em></h2>
+        </div>
+        <a class="link-arrow" href="aktuelles-news.html">Alle Beiträge →</a>
+      </div>
+
+      <!-- Wird von js/main.js befüllt -->
+      <div class="news-grid" id="news-grid">
+        <p style="color:var(--muted)">Beiträge werden geladen …</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FAHRZEUGE
+  ════════════════════════════════════════════════════════ -->
+  <section id="fahrzeuge" class="section section-dark reveal">
+    <div class="section-inner">
+      <div class="section-top">
+        <div>
+          <span class="section-label">Unsere Sammlung</span>
+          <h2 class="section-title">Historische <em>Fahrzeuge</em></h2>
+          <p class="section-desc">
+            Vom Lanz-Bulldog bis zum Oldtimer-Automobil –
+            entdeckt unsere vielfältige Fahrzeugsammlung.
+          </p>
+        </div>
+        <a class="link-arrow" href="fahrzeuge-traktoren.html">Alle Fahrzeuge →</a>
+      </div>
+
+      <div class="fahrzeuge-grid">
+        <a class="fz-card" href="fahrzeuge-traktoren.html" data-kategorie="traktoren">
+          <div class="fz-thumb t1">
+            <span aria-hidden="true">🚜</span>
+            <span class="fz-count">Traktoren</span>
+          </div>
+          <div class="fz-label">Traktoren</div>
+        </a>
+        <a class="fz-card" href="fahrzeuge-einachser.html" data-kategorie="einachser">
+          <div class="fz-thumb t2">
+            <span aria-hidden="true">⚙️</span>
+            <span class="fz-count">Einachser</span>
+          </div>
+          <div class="fz-label">Einachser</div>
+        </a>
+        <a class="fz-card" href="fahrzeuge-automobile.html" data-kategorie="automobile">
+          <div class="fz-thumb t3">
+            <span aria-hidden="true">🚗</span>
+            <span class="fz-count">Automobile</span>
+          </div>
+          <div class="fz-label">Automobile</div>
+        </a>
+        <a class="fz-card" href="fahrzeuge-zweiraeder.html" data-kategorie="zweiraeder">
+          <div class="fz-thumb t4">
+            <span aria-hidden="true">🏍️</span>
+            <span class="fz-count">Zweiräder</span>
+          </div>
+          <div class="fz-label">Zweiräder</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       GALERIE VORSCHAU
+  ════════════════════════════════════════════════════════ -->
+  <section id="galerie-preview" class="section section-paper reveal">
+    <div class="section-inner">
+      <div class="section-top">
+        <div>
+          <span class="section-label">Bildergalerie</span>
+          <h2 class="section-title">Eindrücke aus <em>unseren Treffen</em></h2>
+        </div>
+        <a class="link-arrow" href="galerie.html">Zur vollständigen Galerie →</a>
+      </div>
+
+      <div class="galerie-grid">
+        <a class="gal-item g1" href="galerie.html?jahr=2026">
+          <span class="gal-placeholder" aria-hidden="true">🚜</span>
+          <div class="gal-overlay">2025</div>
+        </a>
+        <a class="gal-item g2" href="galerie.html?jahr=2026">
+          <span class="gal-placeholder" aria-hidden="true">⚙️</span>
+          <div class="gal-overlay">2025</div>
+        </a>
+        <a class="gal-item g3" href="galerie.html?jahr=2025">
+          <span class="gal-placeholder" aria-hidden="true">🚜</span>
+          <div class="gal-overlay">2025</div>
+        </a>
+        <a class="gal-item g4" href="galerie.html?jahr=2025">
+          <span class="gal-placeholder" aria-hidden="true">⚙️</span>
+          <div class="gal-overlay">2025</div>
+        </a>
+        <a class="gal-item g5" href="galerie.html?jahr=2024">
+          <span class="gal-placeholder" aria-hidden="true">🚗</span>
+          <div class="gal-overlay">2024</div>
+        </a>
+        <a class="gal-item g6" href="galerie.html?jahr=2024">
+          <span class="gal-placeholder" aria-hidden="true">🏍️</span>
+          <div class="gal-overlay">2024</div>
+        </a>
+        <a class="gal-item g7" href="galerie.html?jahr=2023">
+          <span class="gal-placeholder" aria-hidden="true">🌾</span>
+          <div class="gal-overlay">2023</div>
+        </a>
+        <a class="gal-item g8" href="galerie.html?jahr=2023">
+          <span class="gal-placeholder" aria-hidden="true">🔧</span>
+          <div class="gal-overlay">2023</div>
+        </a>
+        <a class="gal-item g9" href="galerie.html?jahr=2022">
+          <span class="gal-placeholder" aria-hidden="true">🎉</span>
+          <div class="gal-overlay">2022</div>
+        </a>
+        <a class="gal-item g10" href="galerie.html?jahr=2022">
+          <span class="gal-placeholder" aria-hidden="true">🌞</span>
+          <div class="gal-overlay">2022</div>
+        </a>
+      </div>
+
+      <div class="galerie-cta">
+        <a class="btn btn-primary" href="galerie.html">Alle Bilder ansehen →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       CTA: MITGLIED WERDEN
+  ════════════════════════════════════════════════════════ -->
+  <section id="cta-mitglied" class="reveal">
+    <h2>Leidenschaft für historische Fahrzeuge?</h2>
+    <p>
+      Werden Sie Mitglied beim Traktor Veteranen Club 88 Griesheim e.V.
+      und werden Sie Teil einer engagierten Gemeinschaft von Oldtimer-Enthusiasten.
+      Besuchen Sie uns unverbindlich am Stammtisch!
+    </p>
+    <div class="cta-buttons">
+      <a class="btn btn-white" href="data/img/aufnahmeformular.pdf" download>
+        📄 Aufnahmeformular (PDF)
+      </a>
+      <a class="btn btn-ghost" href="data/img/satzung.pdf" download>
+        📜 Vereinssatzung (PDF)
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer wird von js/components.js eingefügt -->
+
+  <!-- Daten-Dateien (müssen VOR main.js geladen werden) -->
+  <script src="data/termine.js"></script>
+  <script src="data/news.js"></script>
+  <script src="data/galerie.js"></script>
+  <script src="data/fahrzeuge.js"></script>
+
+  <!-- Komponenten: Navigation + Footer -->
+  <script src="js/components.js"></script>
+
+  <!-- Haupt-Script: Termine + News rendern, Animationen -->
+  <script src="js/main.js"></script>
+
+</body>
+</html>

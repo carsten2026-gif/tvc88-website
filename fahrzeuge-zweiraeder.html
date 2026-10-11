@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Unsere Zweirädersammlung – historische historische Motorräder und Mopeds beim TVC88 Griesheim e.V.">
+  <title>Zweiräder · TVC88 Griesheim e.V.</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data/img/logo/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="data/img/logo/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="alternate icon" href="data/img/logo/favicon.ico">
+  <link rel="apple-touch-icon" href="data/img/logo/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/fahrzeuge.css">
+  <script>
+    const TVC_PAGE         = 'fahrzeuge';
+    const TVC_FAHRZEUG_TYP = 'zweiraeder';
+  </script>
+</head>
+<body>
+  <!-- Navigation → js/components.js -->
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a><span class="sep">›</span>
+        <span>Fahrzeuge</span><span class="sep">›</span>
+        <span>Zweiräder</span>
+      </nav>
+      <h1>🏍️ Zweiräder</h1>
+      <p id="fz-count" class="fz-hero-count"></p>
+    </div>
+  </div>
+  <nav class="fz-subnav" aria-label="Fahrzeugkategorien">
+    <div class="fz-subnav-inner">
+      <a class="fz-subnav-link active" href="fahrzeuge-zweiraeder.html">🏍️ Zweiräder</a>
+      <a class="fz-subnav-link" href="fahrzeuge-einachser.html">⚙️ Einachser</a>
+      <a class="fz-subnav-link" href="fahrzeuge-automobile.html">🚗 Automobile</a>
+      <a class="fz-subnav-link active" href="fahrzeuge-zweiraeder.html">🏍️ Zweiräder</a>
+    </div>
+  </nav>
+  <section class="section">
+    <div class="section-inner">
+      <p class="fz-intro-text reveal" id="fz-intro"></p>
+      <div class="fz-featured reveal" id="fz-featured"></div>
+      <h2 class="fz-grid-title reveal">Weitere <em>Zweiräder</em></h2>
+      <div class="fz-grid reveal" id="fz-grid"></div>
+      <div class="fz-hint reveal">
+        <span>✏️</span>
+        <div>
+          <strong>Fahrzeug hinzufügen:</strong>
+          In <code>data/fahrzeuge.js</code> unter <code>zweiraeder.fahrzeuge</code>
+          einen neuen Eintrag ergänzen und hochladen.
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="cta-mitglied" class="reveal">
+    <h2>Ein Fahrzeug zum Zeigen?</h2>
+    <p>Mitglieder des TVC88 können ihre historischen Fahrzeuge in unserer Sammlung präsentieren und bei Treffen teilnehmen.</p>
+    <div class="cta-buttons">
+      <a class="btn btn-white" href="verein-mitglied.html">Mitglied werden →</a>
+      <a class="btn btn-ghost" href="aktuelles-termine.html">Nächste Termine</a>
+    </div>
+  </section>
+  <!-- Footer → js/components.js -->
+  <script src="data/fahrzeuge.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/fahrzeuge.js"></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Geschichte und Chronik des Traktor Veteranen Club 88 Griesheim e.V. – von der Gründung 1988 bis heute.">
+  <title>Geschichte & Chronik · TVC88 Griesheim e.V.</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data/img/logo/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="data/img/logo/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="alternate icon" href="data/img/logo/favicon.ico">
+  <link rel="apple-touch-icon" href="data/img/logo/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/verein.css">
+  <script>const TVC_PAGE = 'verein';</script>
+</head>
+<body>
+
+  <!-- Navigation → js/components.js -->
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="sep">›</span>
+        <span>Der Verein</span>
+        <span class="sep">›</span>
+        <span>Geschichte &amp; Chronik</span>
+      </nav>
+      <h1>ℹ️ Geschichte &amp; Chronik</h1>
+      <p>Vom kleinen Gründerkreis 1988 bis zur lebendigen Gemeinschaft von heute.</p>
+    </div>
+  </div>
+
+  <!-- Unternavigation -->
+  <nav class="verein-subnav" aria-label="Vereinsbereich">
+    <div class="verein-subnav-inner">
+      <a class="verein-subnav-link active" href="verein-geschichte.html">ℹ️ Geschichte &amp; Chronik</a>
+      <a class="verein-subnav-link" href="verein-vorstand.html">👥 Vorstand</a>
+      <a class="verein-subnav-link" href="verein-mitglied.html">🤝 Mitglied werden</a>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="section-inner">
+
+      <!-- Intro -->
+      <div style="max-width:720px; margin: 0 auto 60px; text-align:center;" class="reveal">
+        <span class="section-label">Seit 1988</span>
+        <h2 class="section-title">Über <em>35 Jahre</em> Leidenschaft<br>für historische Fahrzeuge</h2>
+        <p class="section-desc" style="max-width:560px; margin: 12px auto 0;">
+          Was 1988 mit zwölf Enthusiasten begann, ist heute einer der
+          aktivsten Oldtimer-Clubs der Region Rhein-Main. Hier ist unsere Geschichte.
+        </p>
+      </div>
+
+      <!-- Zeitstrahl -->
+      <div class="timeline reveal" id="chronik-timeline">
+        <!-- Wird von JavaScript befüllt -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta-mitglied" class="reveal">
+    <h2>Teil unserer Geschichte werden</h2>
+    <p>
+      Jedes neue Mitglied schreibt ein Stück TVC88-Geschichte weiter.
+      Besucht uns am Stammtisch oder werdet direkt Mitglied.
+    </p>
+    <div class="cta-buttons">
+      <a class="btn btn-white"  href="verein-mitglied.html">Mitglied werden →</a>
+      <a class="btn btn-ghost"  href="aktuelles-stammtisch.html">Zum Stammtisch</a>
+    </div>
+  </section>
+
+  <!-- Footer → js/components.js -->
+
+  <script src="data/verein.js"></script>
+  <script src="js/components.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    /* Scroll-Reveal */
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+      });
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.reveal').forEach(function (el) { ro.observe(el); });
+
+    /* Zeitstrahl rendern */
+    if (!window.TVC_CHRONIK) return;
+    var el = document.getElementById('chronik-timeline');
+
+    el.innerHTML = window.TVC_CHRONIK.map(function (e, i) {
+      var isEven = i % 2 === 0;
+      var box = `
+<div class="tl-box">
+  ${e.highlight ? '<span class="tl-highlight-badge">Jubiläum</span>' : ''}
+  <h3>${e.titel}</h3>
+  <p>${e.text}</p>
+</div>`;
+      return `
+<div class="tl-entry ${e.highlight ? 'highlight' : ''}">
+  <div class="tl-left">${isEven ? box : '<div class="tl-empty"></div>'}</div>
+  <div class="tl-center">
+    <div class="tl-bubble">${e.jahr}</div>
+  </div>
+  <div class="tl-right">${!isEven ? box : '<div class="tl-empty"></div>'}</div>
+</div>`;
+    }).join('');
+
+    /* Einträge staggered einblenden */
+    var entries = el.querySelectorAll('.tl-entry');
+    var co = new IntersectionObserver(function (obs) {
+      obs.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.style.transition = 'opacity .6s ease, transform .6s ease';
+        entry.target.style.opacity    = '1';
+        entry.target.style.transform  = 'none';
+        co.unobserve(entry.target);
+      });
+    }, { threshold: 0.15 });
+
+    entries.forEach(function (e) {
+      e.style.opacity   = '0';
+      e.style.transform = 'translateY(16px)';
+      co.observe(e);
+    });
+  });
+  </script>
+</body>
+</html>

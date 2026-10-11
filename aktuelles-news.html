@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Neuigkeiten und Berichte des Traktor Veteranen Club 88 Griesheim e.V. – Vereinsleben, Veranstaltungen und Presseberichte.">
+  <title>Aktuelles · TVC88 Griesheim e.V.</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data/img/logo/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="data/img/logo/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="alternate icon" href="data/img/logo/favicon.ico">
+  <link rel="apple-touch-icon" href="data/img/logo/apple-touch-icon.png">
+  <style>
+    /* ── News-Seite spezifische Stile ──────────────────────── */
+
+    /* Filter-Leiste */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .filter-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-right: 4px;
+    }
+    .filter-btn {
+      padding: 7px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--paper);
+      color: var(--muted);
+      cursor: pointer;
+      transition: background .18s, color .18s, border-color .18s;
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--rust);
+      color: #fff;
+      border-color: var(--rust);
+    }
+
+    /* Featured-Artikel (neuester) */
+    .news-featured {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 0;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 36px;
+      box-shadow: 0 4px 24px var(--shadow);
+      transition: box-shadow .2s;
+    }
+    .news-featured:hover { box-shadow: 0 8px 36px var(--shadow); }
+    @media (max-width: 760px) {
+      .news-featured { grid-template-columns: 1fr; }
+    }
+    .news-featured-thumb {
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 72px;
+      position: relative;
+      overflow: hidden;
+    }
+    @media (max-width: 760px) {
+      .news-featured-thumb { aspect-ratio: 16/9; font-size: 52px; }
+    }
+    .news-featured-thumb img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .news-featured-thumb .ph { opacity: .45; position: relative; z-index: 1; }
+    .nf-badge {
+      position: absolute; top: 16px; left: 16px; z-index: 2;
+      background: var(--rust); color: #fff;
+      font-size: 9px; font-weight: 700;
+      letter-spacing: .16em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 2px;
+    }
+    .news-featured-body {
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .news-featured-body .news-meta { margin-bottom: 12px; }
+    .news-featured-body h2 { font-size: clamp(19px, 2.5vw, 26px); margin-bottom: 14px; line-height: 1.3; }
+    .news-featured-body p  { font-size: 14.5px; color: var(--muted); line-height: 1.75; flex: 1; }
+    .news-featured-body .read-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 22px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--rust);
+      transition: gap .15s;
+    }
+    .news-featured-body .read-more:hover { gap: 10px; }
+
+    /* News-Grid (restliche Artikel) */
+    .news-list-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 22px;
+    }
+    .nl-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .nl-card:hover { transform: translateY(-4px); box-shadow: 0 10px 32px var(--shadow); }
+    .nl-card.hidden { display: none; }
+
+    .nl-thumb {
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      position: relative;
+      overflow: hidden;
+    }
+    .nl-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .nl-thumb .ph { opacity: .45; position: relative; z-index: 1; }
+
+    .nl-body { padding: 18px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .nl-body .news-meta { margin-bottom: 0; }
+    .nl-body h3 { font-size: 16px; line-height: 1.35; }
+    .nl-body p  { font-size: 13px; color: var(--muted); line-height: 1.65; flex: 1; }
+    .nl-body .read-more {
+      margin-top: 6px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--rust);
+      display: inline-flex; align-items: center; gap: 4px;
+      transition: gap .15s;
+    }
+    .nl-body .read-more:hover { gap: 8px; }
+
+    /* Leer-Zustand */
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 50px 20px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .no-results span { display: block; font-size: 40px; margin-bottom: 12px; }
+
+    /* Seitenleiste-Tipp: Neuen Beitrag hinzufügen */
+    .news-hint-box {
+      background: var(--wheat);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      border-radius: 0 3px 3px 0;
+      padding: 18px 22px;
+      margin-top: 44px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .news-hint-box .icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+    .news-hint-box strong { color: var(--ink); }
+    .news-hint-box code {
+      background: rgba(0,0,0,.07);
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* Zähler-Badge */
+    .count-badge {
+      display: inline-block;
+      background: var(--rust);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 10px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+  </style>
+  <script>const TVC_PAGE = 'aktuelles';</script>
+</head>
+<body>
+
+  <!-- Navigation → js/components.js -->
+
+  <!-- ═══════════════════════════════════════════════════════
+       SEITEN-HERO
+  ════════════════════════════════════════════════════════ -->
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <nav class="breadcrumb" aria-label="Brotkrümel-Navigation">
+        <a href="index.html">Home</a>
+        <span class="sep" aria-hidden="true">›</span>
+        <span>Aktuelles</span>
+      </nav>
+      <h1>📰 News &amp; Berichte</h1>
+      <p>Neuigkeiten aus dem Vereinsleben, Veranstaltungsberichte und Presseecho.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       HAUPT-INHALT
+  ════════════════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-inner">
+
+      <!-- Filter-Leiste -->
+      <div class="filter-bar reveal" id="filter-bar" role="group" aria-label="Beiträge filtern">
+        <span class="filter-label">Filtern:</span>
+        <button class="filter-btn active" data-filter="alle">Alle</button>
+        <button class="filter-btn" data-filter="Vereinsleben">Vereinsleben</button>
+        <button class="filter-btn" data-filter="Veranstaltung">Veranstaltung</button>
+        <button class="filter-btn" data-filter="Presse">Presse</button>
+      </div>
+
+      <!-- Neuester Beitrag: Featured -->
+      <div id="featured-wrap" class="reveal"></div>
+
+      <!-- Restliche Beiträge: Grid -->
+      <div id="news-list-grid" class="news-list-grid"></div>
+
+      <!-- Hinweis für Redakteur -->
+      <div class="news-hint-box reveal">
+        <span class="icon" aria-hidden="true">✏️</span>
+        <div>
+          <strong>Neuen Beitrag hinzufügen:</strong>
+          Datei <code>data/news.js</code> in einem Texteditor öffnen, neuen Eintrag
+          ganz oben einfügen und die Datei per FTP hochladen.
+          Der neue Beitrag erscheint dann automatisch hier und auf der Startseite.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       CTA
+  ════════════════════════════════════════════════════════ -->
+  <section id="cta-mitglied" class="reveal">
+    <h2>Immer auf dem Laufenden bleiben</h2>
+    <p>
+      Beim monatlichen Stammtisch erfahrt ihr News aus erster Hand –
+      und könnt direkt mit dabei sein.
+    </p>
+    <div class="cta-buttons">
+      <a class="btn btn-white"  href="aktuelles-stammtisch.html">Zum Stammtisch →</a>
+      <a class="btn btn-ghost"  href="aktuelles-termine.html">Alle Termine</a>
+    </div>
+  </section>
+
+  <!-- Footer → js/components.js -->
+
+  <script src="data/news.js"></script>
+  <script src="js/components.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    /* ── Scroll-Reveal ──────────────────────────────────── */
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(function (el) { ro.observe(el); });
+
+    /* ── Hilfsfunktionen ────────────────────────────────── */
+    var MONATE_LANG = ['Januar','Februar','März','April','Mai','Juni',
+                       'Juli','August','September','Oktober','November','Dezember'];
+
+    var COLOR_CLASSES = ['news-thumb-color-1','news-thumb-color-2',
+                         'news-thumb-color-3','news-thumb-color-4'];
+
+    function formatDatum(isoStr) {
+      var d = new Date(isoStr);
+      return d.getDate() + '. ' + MONATE_LANG[d.getMonth()] + ' ' + d.getFullYear();
+    }
+
+    function thumbHtml(n) {
+      var cls = COLOR_CLASSES[(n.farbe || 1) - 1];
+      if (n.bild) {
+        return '<img src="' + n.bild + '" alt="' + n.titel + '" loading="lazy">';
+      }
+      return '<div class="' + cls + '" style="position:absolute;inset:0;"></div>'
+           + '<span class="ph" aria-hidden="true">' + (n.emoji || '📰') + '</span>';
+    }
+
+    /* ── Artikel sortieren (neueste zuerst) ─────────────── */
+    if (!window.TVC_NEWS) return;
+
+    var alle = window.TVC_NEWS.slice().sort(function (a, b) {
+      return new Date(b.datum) - new Date(a.datum);
+    });
+
+    /* ── Featured-Artikel (neuester) rendern ────────────── */
+    var featWrap = document.getElementById('featured-wrap');
+
+    function renderFeatured(artikel) {
+      if (!artikel) { featWrap.innerHTML = ''; return; }
+      featWrap.innerHTML = `
+<article class="news-featured">
+  <div class="news-featured-thumb">
+    ${thumbHtml(artikel)}
+    <span class="nf-badge">Neuester Beitrag</span>
+  </div>
+  <div class="news-featured-body">
+    <div class="news-meta">
+      <span class="news-cat">${artikel.kategorie}</span>
+      · ${formatDatum(artikel.datum)}
+    </div>
+    <h2>${artikel.titel}</h2>
+    <p>${artikel.teaser}</p>
+    <a class="read-more" href="aktuelles-news.html#beitrag-${artikel.id}">
+      Weiterlesen →
+    </a>
+  </div>
+</article>`;
+      ro.observe(featWrap); /* Reveal erneut anwenden */
+    }
+
+    /* ── Grid (alle weiteren) rendern ───────────────────── */
+    var grid = document.getElementById('news-list-grid');
+
+    function renderGrid(liste, featured) {
+      var rest = liste.filter(function (n) {
+        return !featured || n.id !== featured.id;
+      });
+
+      if (rest.length === 0) {
+        grid.innerHTML = `
+<div class="no-results">
+  <span>🔍</span>
+  Keine weiteren Beiträge in dieser Kategorie.
+</div>`;
+        return;
+      }
+
+      grid.innerHTML = rest.map(function (n) {
+        return `
+<article class="nl-card" data-kategorie="${n.kategorie}" id="beitrag-${n.id}">
+  <div class="nl-thumb">
+    ${thumbHtml(n)}
+  </div>
+  <div class="nl-body">
+    <div class="news-meta">
+      <span class="news-cat">${n.kategorie}</span>
+      · ${formatDatum(n.datum)}
+    </div>
+    <h3>${n.titel}</h3>
+    <p>${n.teaser}</p>
+    <a class="read-more" href="aktuelles-news.html#beitrag-${n.id}">
+      Weiterlesen →
+    </a>
+  </div>
+</article>`;
+      }).join('');
+
+      /* Karten einzeln per Stagger einblenden */
+      var cards = grid.querySelectorAll('.nl-card');
+      var co = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry, i) {
+          if (entry.isIntersecting) {
+            setTimeout(function () {
+              entry.target.style.opacity   = '1';
+              entry.target.style.transform = 'none';
+            }, i * 70);
+            co.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.06 });
+
+      cards.forEach(function (c) {
+        c.style.opacity   = '0';
+        c.style.transform = 'translateY(14px)';
+        c.style.transition = 'opacity .5s ease, transform .5s ease';
+        co.observe(c);
+      });
+    }
+
+    /* ── Erste Darstellung ───────────────────────────────── */
+    var aktFeatured = alle[0] || null;
+    renderFeatured(aktFeatured);
+    renderGrid(alle, aktFeatured);
+
+    /* Beitragszähler in Filter-Buttons */
+    var countBadge = document.createElement('span');
+    countBadge.className = 'count-badge';
+    countBadge.textContent = alle.length;
+    document.querySelector('.filter-btn[data-filter="alle"]').appendChild(countBadge);
+
+    /* ── Filter-Logik ────────────────────────────────────── */
+    document.querySelectorAll('.filter-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.filter-btn').forEach(function (b) {
+          b.classList.remove('active');
+        });
+        this.classList.add('active');
+
+        var kat = this.dataset.filter;
+
+        if (kat === 'alle') {
+          renderFeatured(alle[0] || null);
+          renderGrid(alle, alle[0] || null);
+        } else {
+          var gefiltert = alle.filter(function (n) {
+            return n.kategorie === kat;
+          });
+          var feat = gefiltert[0] || null;
+          renderFeatured(feat);
+          renderGrid(gefiltert, feat);
+        }
+      });
+    });
+
+  });
+  </script>
+</body>
+</html>

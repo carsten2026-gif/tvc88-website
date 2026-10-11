@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Datenschutzerklärung des Traktor Veteranen Club 88 Griesheim e.V. gemäß DSGVO.">
+  <title>Datenschutz · TVC88 Griesheim e.V.</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data/img/logo/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="data/img/logo/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="alternate icon" href="data/img/logo/favicon.ico">
+  <link rel="apple-touch-icon" href="data/img/logo/apple-touch-icon.png">
+  <style>
+    .legal-wrap { max-width: 780px; margin: 0 auto; }
+
+    /* Kurzübersicht oben */
+    .ds-overview {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 640px) { .ds-overview { grid-template-columns: repeat(2, 1fr); } }
+
+    .ds-pill {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 18px 14px;
+      text-align: center;
+      box-shadow: 0 2px 6px var(--shadow);
+    }
+    .ds-pill .icon { font-size: 26px; display: block; margin-bottom: 8px; }
+    .ds-pill h4 {
+      font-size: 13px; color: var(--ink);
+      margin-bottom: 4px; font-family: inherit; font-weight: 700;
+    }
+    .ds-pill p { font-size: 11px; color: var(--muted); line-height: 1.55; }
+
+    /* Abschnitts-Karten */
+    .ds-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+    .ds-card-head {
+      background: var(--paper-2);
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .ds-card-head:hover { background: var(--wheat); }
+    .ds-card-head .num {
+      background: var(--rust); color: #fff;
+      width: 26px; height: 26px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; flex-shrink: 0;
+    }
+    .ds-card-head h2 {
+      font-size: 15px; font-weight: 700;
+      font-family: inherit; color: var(--ink); flex: 1;
+    }
+    .ds-toggle {
+      font-size: 20px; color: var(--muted);
+      transition: transform .2s; flex-shrink: 0;
+    }
+    .ds-card.open .ds-toggle { transform: rotate(45deg); }
+
+    .ds-body {
+      padding: 22px 24px;
+      display: none;
+    }
+    .ds-card.open .ds-body { display: block; }
+
+    .ds-body p {
+      font-size: 14px; color: var(--ink-2);
+      line-height: 1.85; margin-bottom: 12px;
+    }
+    .ds-body p:last-child { margin-bottom: 0; }
+    .ds-body h3 {
+      font-size: 11px; font-weight: 700;
+      font-family: inherit; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--muted);
+      margin: 16px 0 6px;
+    }
+    .ds-body ul {
+      padding-left: 20px; list-style: disc;
+      font-size: 14px; color: var(--ink-2);
+      line-height: 1.85; margin: 6px 0 12px;
+    }
+    .ds-body a { color: var(--rust); font-weight: 600; }
+    .ds-body a:hover { text-decoration: underline; }
+
+    /* Rechte-Kacheln */
+    .rechte-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px; margin-top: 12px;
+    }
+    @media (max-width: 560px) { .rechte-grid { grid-template-columns: 1fr 1fr; } }
+    .recht-item {
+      background: var(--paper-2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 14px 12px;
+      text-align: center;
+    }
+    .recht-item .ri { font-size: 22px; display: block; margin-bottom: 6px; }
+    .recht-item strong { font-size: 12px; color: var(--ink); display: block; margin-bottom: 3px; }
+    .recht-item span  { font-size: 11px; color: var(--muted); line-height: 1.45; }
+
+    /* Kontakt-Box */
+    .ds-contact {
+      background: var(--forest2);
+      border-radius: 4px; padding: 24px 28px;
+      margin-top: 24px;
+      display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap;
+    }
+    .ds-contact .icon { font-size: 32px; flex-shrink: 0; }
+    .ds-contact h3 { font-size: 16px; color: #fff; margin-bottom: 6px; }
+    .ds-contact p  { font-size: 13px; color: #8FB49A; line-height: 1.75; }
+    .ds-contact a  { color: var(--gold); font-weight: 600; }
+
+    /* Stand-Badge */
+    .ds-stand {
+      text-align: right;
+      font-size: 12px; color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .ds-stand strong { color: var(--rust); }
+  </style>
+  <script>const TVC_PAGE = 'kontakt';</script>
+</head>
+<body>
+
+  <!-- Navigation → js/components.js -->
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="sep">›</span>
+        <span>Datenschutz</span>
+      </nav>
+      <h1>🔒 Datenschutzerklärung</h1>
+      <p>Wir nehmen den Schutz Eurer Daten ernst – hier erfahrt Ihr, wie und warum
+         wir welche Daten verarbeiten.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-inner">
+      <div class="legal-wrap">
+
+        <!-- Schnellübersicht -->
+        <div class="ds-overview reveal">
+          <div class="ds-pill">
+            <span class="icon">🍪</span>
+            <h4>Keine Tracking-Cookies</h4>
+            <p>Wir setzen keine Analyse- oder Werbe-Cookies.</p>
+          </div>
+          <div class="ds-pill">
+            <span class="icon">📊</span>
+            <h4>Kein Analytics</h4>
+            <p>Kein Google Analytics, kein Matomo, keine sonstigen Tracking-Dienste.</p>
+          </div>
+          <div class="ds-pill">
+            <span class="icon">🔐</span>
+            <h4>SSL-Verschlüsselung</h4>
+            <p>Alle Daten werden verschlüsselt per HTTPS übertragen.</p>
+          </div>
+          <div class="ds-pill">
+            <span class="icon">📭</span>
+            <h4>Kein Newsletter</h4>
+            <p>Wir speichern keine E-Mail-Adressen für Werbezwecke.</p>
+          </div>
+        </div>
+
+        <p class="ds-stand">
+          Stand: <strong id="ds-stand"></strong> · Gültig für: tvc88.de
+        </p>
+
+        <!-- ══════════════════════════════════════════════ -->
+        <!-- 1. Verantwortlicher                           -->
+        <!-- ══════════════════════════════════════════════ -->
+        <div class="ds-card open reveal">
+          <div class="ds-card-head">
+            <div class="num">1</div>
+            <h2>Verantwortlicher</h2>
+            <span class="ds-toggle">+</span>
+          </div>
+          <div class="ds-body">
+            <p>Verantwortlicher im Sinne der DSGVO (Art. 4 Nr. 7 DSGVO):</p>
+            <p>
+              <strong>Traktor Veteranen Club 88 Griesheim e.V.</strong><br>
+              vertreten durch den 1. Vorsitzenden Norbert Heydt Lindenstrasse 14 64347 Griesheim<br>
+              E-Mail: <a href="mailto:info@tvc88.de">info@tvc88.de</a>
+            </p>
+            <p style="font-size:13px;color:var(--muted)">
+              Wir haben keinen gesetzlich vorgeschriebenen Datenschutzbeauftragten,
+              da als kleiner gemeinnütziger Verein keine Pflicht zur Benennung besteht
+              (Art. 37 DSGVO). Datenschutzanfragen richten Sie bitte direkt an die
+              oben genannte E-Mail-Adresse.
+            </p>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════ -->
+        <!-- 2. Hosting & Server-Logs                      -->
+        <!-- ══════════════════════════════════════════════ -->
+        <div class="ds-card reveal">
+          <div class="ds-card-head">
+            <div class="num">2</div>
+            <h2>Hosting &amp; Server-Logfiles</h2>
+            <span class="ds-toggle">+</span>
+          </div>
+          <div class="ds-body">
+            <p>
+              Diese Website wird bei einem externen Hosting-Anbieter betrieben.
+              Beim Abruf unserer Seiten speichert der Server automatisch folgende
+              Daten in sogenannten Logfiles:
+            </p>
+            <ul>
+              <li>IP-Adresse des anfragenden Geräts (nach kurzer Zeit anonymisiert)</li>
+              <li>Datum und Uhrzeit des Zugriffs</li>
+              <li>Name und URL der aufgerufenen Datei</li>
+              <li>Menge der übertragenen Daten</li>
+              <li>Verwendeter Browser, Betriebssystem und Referrer-URL</li>
+              <li>HTTP-Statuscode der Antwort</li>
+            </ul>
+            <p>
+              Diese Daten werden ausschließlich zur technischen Fehleranalyse
+              und zur Sicherstellung des Betriebs verarbeitet – eine Zuordnung
+              zu einzelnen Personen ist nicht beabsichtigt. Die Logs werden nach
+              spätestens 7 Tagen automatisch gelöscht.
+            </p>
+            <p>
+              <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. f DSGVO
+              (berechtigtes Interesse an technisch einwandfreiem Betrieb).
+            </p>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════ -->
+        <!-- 3. Kontaktformular                            -->
+        <!-- ══════════════════════════════════════════════ -->
+        <div class="ds-card reveal">
+          <div class="ds-card-head">
+            <div class="num">3</div>
+            <h2>Kontaktformular &amp; E-Mail-Kontakt</h2>
+            <span class="ds-toggle">+</span>
+          </div>
+          <div class="ds-body">
+            <p>
+              Wenn Sie uns über das Kontaktformular oder per E-Mail kontaktieren,
+              verarbeiten wir die von Ihnen übermittelten Daten (Name, E-Mail-Adresse,
+              Betreff, Nachrichteninhalt) ausschließlich zur Bearbeitung Ihrer Anfrage
+              und für eventuelle Rückfragen. Eine Weitergabe an Dritte erfolgt nicht.
+            </p>
+            <p>
+              Die Daten werden nach Abschluss der Anfrage gelöscht, sofern keine
+              gesetzliche Aufbewahrungspflicht entgegensteht.
+              <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. f DSGVO.
+            </p>
+
+            <h3>Formspree (Formular-Dienstleister)</h3>
+            <p>
+              Das Kontaktformular wird über den Dienst <strong>Formspree</strong>
+              (Formspree, Inc., 2261 Market Street #4990, San Francisco, CA 94114, USA)
+              betrieben. Die im Formular eingetragenen Daten werden an Server von
+              Formspree übertragen und von dort als E-Mail an uns weitergeleitet.
+              Formspree speichert die Formulardaten für maximal 30 Tage und löscht
+              sie anschließend automatisch.
+            </p>
+            <p>
+              Formspree ist unter dem EU-US Data Privacy Framework (DPF) zertifiziert,
+              das eine dem europäischen Recht gleichwertige Datenschutzgarantie
+              bietet. Datenschutzerklärung Formspree:
+              <a href="https://formspree.io/legal/privacy-policy/"
+                 target="_blank" rel="noopener">formspree.io/legal/privacy-policy</a>
+            </p>
+            <p>
+              Alternativ können Sie uns jederzeit direkt per E-Mail ohne
+              Formular-Dienstleister kontaktieren:
+              <a href="mailto:info@tvc88.de">info@tvc88.de</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════ -->
+        <!-- 4. OpenStreetMap                              -->
+        <!-- ══════════════════════════════════════════════ -->
+        <div class="ds-card reveal">
+          <div class="ds-card-head">
+            <div class="num">4</div>
+            <h2>OpenStreetMap (eingebettete Karte)</h2>
+            <span class="ds-toggle">+</span>
+          </div>
+          <div class="ds-body">
+            <p>
+              Auf der Stammtisch- und der Kontaktseite binden wir Kartenausschnitte
+              von <strong>OpenStreetMap</strong> ein. Anbieter ist die
+              OpenStreetMap Foundation (OSMF),
+              St John's Innovation Centre, Cowley Road, Cambridge, CB4 0WS,
+              Vereinigtes Königreich.
+            </p>
+            <p>
+              Beim Aufruf dieser Seiten wird Ihre IP-Adresse technisch bedingt
+              an Server der OSMF übertragen, damit der Kartenausschnitt geladen
+              werden kann. Die OSMF verarbeitet diese Daten gemäß ihrer
+              Datenschutzerklärung:
+              <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy"
+                 target="_blank" rel="noopener">osmfoundation.org – Privacy Policy</a>
+            </p>
+            <p>
+              Das Vereinigte Königreich verfügt über einen
+              Angemessenheitsbeschluss der Europäischen Kommission (Art. 45 DSGVO),
+              sodass die Datenübertragung ohne gesonderte Garantien zulässig ist.
+              <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. f DSGVO
+              (berechtigtes Interesse an nutzerfreundlicher Standortdarstellung).
+            </p>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════ -->
+        <!-- 5. Cookies                                    -->
+        <!-- ══════════════════════════════════════════════ -->
+        <div class="ds-card reveal">
+          <div class="ds-card-head">
+            <div class="num">5</div>
+            <h2>Cookies &amp; Tracking</h2>
+            <span class="ds-toggle">+</span>
+          </div>
+          <div class="ds-body">
+            <p>
+              Diese Website setzt <strong>keine Tracking-, Analyse- oder
+              Werbe-Cookies</strong>. Es werden ausschließlich technisch
+              erforderliche Browser-Mechanismen genutzt (z. B. Session-Speicher
+              für Formulareingaben), die keinerlei personenbezogene Daten
+              enthalten und spätestens beim Schließen des Browsers gelöscht werden.
+            </p>
+            <p>
+              Wir verwenden keine Web-Analytics-Dienste (kein Google Analytics,
+              kein Matomo, keine Facebook Pixel oder vergleichbare Tools).
+              Eine Einwilligungs-Abfrage (Cookie-Banner) ist daher nicht
+              erforderlich.
+            </p>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════ -->
+        <!-- 6. Betroffenenrechte                          -->
+        <!-- ══════════════════════════════════════════════ -->
+        <div class="ds-card reveal">
+          <div class="ds-card-head">
+            <div class="num">6</div>
+            <h2>Ihre Rechte als betroffene Person</h2>
+            <span class="ds-toggle">+</span>
+          </div>
+          <div class="ds-body">
+            <p>
+              Gemäß DSGVO stehen Ihnen gegenüber uns folgende Rechte zu:
+            </p>
+            <div class="rechte-grid">
+              <div class="recht-item">
+                <span class="ri">📋</span>
+                <strong>Auskunft</strong>
+                <span>Art. 15 DSGVO – Welche Daten haben wir über Sie?</span>
+              </div>
+              <div class="recht-item">
+                <span class="ri">✏️</span>
+                <strong>Berichtigung</strong>
+                <span>Art. 16 DSGVO – Unrichtige Daten korrigieren</span>
+              </div>
+              <div class="recht-item">
+                <span class="ri">🗑️</span>
+                <strong>Löschung</strong>
+                <span>Art. 17 DSGVO – „Recht auf Vergessen"</span>
+              </div>
+              <div class="recht-item">
+                <span class="ri">⏸️</span>
+                <strong>Einschränkung</strong>
+                <span>Art. 18 DSGVO – Verarbeitung einschränken lassen</span>
+              </div>
+              <div class="recht-item">
+                <span class="ri">🚫</span>
+                <strong>Widerspruch</strong>
+                <span>Art. 21 DSGVO – Verarbeitung widersprechen</span>
+              </div>
+              <div class="recht-item">
+                <span class="ri">📦</span>
+                <strong>Übertragbarkeit</strong>
+                <span>Art. 20 DSGVO – Daten maschinenlesbar erhalten</span>
+              </div>
+            </div>
+            <p style="margin-top:16px">
+              Zur Ausübung eines Ihrer Rechte genügt eine formlose E-Mail an
+              <a href="mailto:info@tvc88.de">info@tvc88.de</a>.
+              Wir bearbeiten Anfragen innerhalb von 30 Tagen (Art. 12 Abs. 3 DSGVO).
+            </p>
+            <p>
+              Wurde Ihre Einwilligung erteilt, können Sie diese jederzeit
+              widerrufen (Art. 7 Abs. 3 DSGVO) – ohne Auswirkung auf die
+              Rechtmäßigkeit der bis zum Widerruf erfolgten Verarbeitung.
+            </p>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════ -->
+        <!-- 7. Beschwerderecht                            -->
+        <!-- ══════════════════════════════════════════════ -->
+        <div class="ds-card reveal">
+          <div class="ds-card-head">
+            <div class="num">7</div>
+            <h2>Beschwerderecht bei der Aufsichtsbehörde</h2>
+            <span class="ds-toggle">+</span>
+          </div>
+          <div class="ds-body">
+            <p>
+              Sie haben das Recht, sich jederzeit bei einer
+              Datenschutz-Aufsichtsbehörde über die Verarbeitung Ihrer
+              personenbezogenen Daten durch uns zu beschweren (Art. 77 DSGVO).
+              Die zuständige Behörde für Hessen ist:
+            </p>
+            <p>
+              <strong>Der Hessische Beauftragte für Datenschutz
+              und Informationsfreiheit (HBDI)</strong><br>
+              Postfach 3163 · 65021 Wiesbaden<br>
+              Telefon: +49 611 1408-0<br>
+              E-Mail: <a href="mailto:poststelle@datenschutz.hessen.de">
+              poststelle@datenschutz.hessen.de</a><br>
+              Web: <a href="https://datenschutz.hessen.de"
+                      target="_blank" rel="noopener">datenschutz.hessen.de</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════ -->
+        <!-- 8. Aktualität & Änderungen                    -->
+        <!-- ══════════════════════════════════════════════ -->
+        <div class="ds-card reveal">
+          <div class="ds-card-head">
+            <div class="num">8</div>
+            <h2>Aktualität &amp; Änderungen dieser Erklärung</h2>
+            <span class="ds-toggle">+</span>
+          </div>
+          <div class="ds-body">
+            <p>
+              Diese Datenschutzerklärung ist aktuell gültig und hat den
+              Stand <strong id="ds-stand-2"></strong>.
+            </p>
+            <p>
+              Durch die Weiterentwicklung dieser Website oder aufgrund geänderter
+              gesetzlicher Vorgaben kann es notwendig werden, diese
+              Datenschutzerklärung anzupassen. Die jeweils aktuelle Version ist
+              stets unter dieser URL abrufbar. Wir empfehlen, sie gelegentlich
+              erneut zu lesen.
+            </p>
+          </div>
+        </div>
+
+        <!-- Kontakt-Box -->
+        <div class="ds-contact reveal">
+          <div class="icon" aria-hidden="true">💬</div>
+          <div>
+            <h3>Fragen zum Datenschutz?</h3>
+            <p>
+              Für alle Datenschutzanfragen stehen wir Euch unter
+              <a href="mailto:info@tvc88.de">info@tvc88.de</a> zur Verfügung.
+              Wir antworten innerhalb von 30 Tagen – in der Regel viel schneller.
+            </p>
+          </div>
+        </div>
+
+        <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:16px">
+          → <a href="impressum.html" style="color:var(--rust)">Zum Impressum</a>
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer → js/components.js -->
+  <script src="js/components.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    /* Stand-Datum automatisch setzen */
+    var monate = ['Januar','Februar','März','April','Mai','Juni',
+                  'Juli','August','September','Oktober','November','Dezember'];
+    var d = new Date();
+    var s = d.getDate() + '. ' + monate[d.getMonth()] + ' ' + d.getFullYear();
+    document.getElementById('ds-stand').textContent  = s;
+    document.getElementById('ds-stand-2').textContent = s;
+
+    /* Akkordeon: Karten auf-/zuklappen */
+    document.querySelectorAll('.ds-card-head').forEach(function (head) {
+      head.addEventListener('click', function () {
+        var card = this.closest('.ds-card');
+        card.classList.toggle('open');
+      });
+    });
+
+    /* Scroll-Reveal */
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+      });
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.reveal').forEach(function (el) { ro.observe(el); });
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+# Originalfotos mit GPS-/EXIF-Daten – niemals veröffentlichen
+_originale/
+# Arbeitsdateien
+Claude outputs/
+.vscode/
+*.zip
+Thumbs.db
+desktop.ini
+.DS_Store

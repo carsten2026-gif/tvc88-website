@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Stammtisch des Traktor Veteranen Club 88 Griesheim – jeden ersten Freitag im Monat im Restaurant TuS, Jahnstraße 20, Griesheim.">
+  <title>Stammtisch · TVC88 Griesheim e.V.</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data/img/logo/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="data/img/logo/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="alternate icon" href="data/img/logo/favicon.ico">
+  <link rel="apple-touch-icon" href="data/img/logo/apple-touch-icon.png">
+  <style>
+    /* ── Stammtisch-spezifische Stile ──────────────────────── */
+
+    /* Info-Box oben */
+    .st-infobox {
+      background: var(--forest2);
+      border-radius: 3px;
+      padding: 36px 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 28px;
+      margin-bottom: 52px;
+    }
+    .st-info-item { display: flex; align-items: flex-start; gap: 14px; }
+    .st-info-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .st-info-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 5px;
+      display: block;
+    }
+    .st-info-value {
+      font-size: 15px;
+      color: #fff;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .st-info-sub {
+      font-size: 12px;
+      color: #7a9882;
+      margin-top: 3px;
+      line-height: 1.5;
+    }
+
+    /* Zweispaltiges Layout: Text + Karte */
+    .st-main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 40px;
+      align-items: start;
+      margin-bottom: 52px;
+    }
+    @media (max-width: 820px) {
+      .st-main-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Fließtext-Bereich */
+    .st-text h3 {
+      font-size: 20px;
+      margin-bottom: 14px;
+      color: var(--ink);
+    }
+    .st-text h3 em { color: var(--rust); font-style: italic; }
+    .st-text p {
+      font-size: 14.5px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+    .st-text p:last-child { margin-bottom: 0; }
+
+    /* Karten-Einbettung */
+    .st-map-wrap {
+      border-radius: 3px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px var(--shadow);
+    }
+    .st-map-wrap iframe {
+      display: block;
+      width: 100%;
+      height: 360px;
+      border: none;
+    }
+    .st-map-caption {
+      background: var(--paper);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .st-map-caption strong { color: var(--ink); }
+    .st-map-caption a {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--rust);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .st-map-caption a:hover { text-decoration: underline; }
+
+    /* Nächste Stammtische */
+    .st-dates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .st-date-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      display: flex;
+      align-items: stretch;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .st-date-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px var(--shadow);
+    }
+    .st-date-side {
+      background: var(--rust);
+      color: #fff;
+      padding: 14px 16px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 72px;
+      flex-shrink: 0;
+    }
+    .st-date-side .day  { font-family: Georgia, serif; font-size: 30px; line-height: 1; }
+    .st-date-side .mon  { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-top: 2px; }
+    .st-date-side .yr   { font-size: 9px; opacity: .7; }
+    .st-date-body { padding: 14px; display: flex; flex-direction: column; gap: 4px; }
+    .st-date-body .wday { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+    .st-date-body .uhr  { font-size: 14px; font-weight: 600; color: var(--ink); }
+    .st-date-body .hint { font-size: 11px; color: var(--muted); font-style: italic; }
+
+    /* Anfahrt / Details */
+    .st-details-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 22px;
+    }
+    .st-details-list li {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .st-details-list .di {
+      font-size: 20px;
+      flex-shrink: 0;
+      width: 28px;
+      text-align: center;
+      margin-top: 1px;
+    }
+    .st-details-list strong { color: var(--ink); display: block; font-size: 13px; margin-bottom: 1px; }
+
+    /* Anmeldung / Kontakt-Box */
+    .st-contact-box {
+      background: var(--wheat);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-top: 52px;
+    }
+    .st-contact-box .icon { font-size: 44px; flex-shrink: 0; }
+    .st-contact-box .txt { flex: 1; min-width: 200px; }
+    .st-contact-box h3 { font-size: 18px; margin-bottom: 6px; }
+    .st-contact-box p  { font-size: 13.5px; color: var(--muted); line-height: 1.7; }
+    .st-contact-box a.inline-link {
+      color: var(--rust);
+      font-weight: 600;
+    }
+    .st-contact-box a.inline-link:hover { text-decoration: underline; }
+
+    /* Wochentagshinweis */
+    .rule-box {
+      background: #fff;
+      border-left: 4px solid var(--gold);
+      padding: 16px 20px;
+      border-radius: 0 3px 3px 0;
+      margin: 24px 0;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .rule-box strong { color: var(--ink); }
+  </style>
+  <script>const TVC_PAGE = 'aktuelles';</script>
+</head>
+<body>
+
+  <!-- Navigation → js/components.js -->
+
+  <!-- ═══════════════════════════════════════════════════════
+       SEITEN-HERO
+  ════════════════════════════════════════════════════════ -->
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <nav class="breadcrumb" aria-label="Brotkrümel-Navigation">
+        <a href="index.html">Home</a>
+        <span class="sep" aria-hidden="true">›</span>
+        <a href="aktuelles-news.html">Aktuelles</a>
+        <span class="sep" aria-hidden="true">›</span>
+        <span>Stammtisch</span>
+      </nav>
+      <h1>🍺 Stammtisch</h1>
+      <p>Jeden ersten Freitag im Monat – Treffpunkt für Mitglieder, Freunde und alle Oldtimer-Begeisterten.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       INFO-BOX
+  ════════════════════════════════════════════════════════ -->
+  <section class="section" style="padding-bottom: 0;">
+    <div class="section-inner">
+      <div class="st-infobox reveal">
+        <div class="st-info-item">
+          <div class="st-info-icon" aria-hidden="true">📅</div>
+          <div>
+            <span class="st-info-label">Wann</span>
+            <div class="st-info-value">Jeden 1. Freitag<br>im Monat</div>
+            <div class="st-info-sub">Das ganze Jahr über, auch im Sommer</div>
+          </div>
+        </div>
+        <div class="st-info-item">
+          <div class="st-info-icon" aria-hidden="true">🕖</div>
+          <div>
+            <span class="st-info-label">Uhrzeit</span>
+            <div class="st-info-value">Ab 19:00 Uhr</div>
+            <div class="st-info-sub">Offen und ohne festes Ende</div>
+          </div>
+        </div>
+        <div class="st-info-item">
+          <div class="st-info-icon" aria-hidden="true">📍</div>
+          <div>
+            <span class="st-info-label">Lokal</span>
+            <div class="st-info-value">Restaurant TuS</div>
+            <div class="st-info-sub">Jahnstraße 20<br>64347 Griesheim</div>
+          </div>
+        </div>
+        <div class="st-info-item">
+          <div class="st-info-icon" aria-hidden="true">🤝</div>
+          <div>
+            <span class="st-info-label">Gäste</span>
+            <div class="st-info-value">Herzlich willkommen</div>
+            <div class="st-info-sub">Keine Anmeldung erforderlich</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       HAUPTINHALT: TEXT + KARTE
+  ════════════════════════════════════════════════════════ -->
+  <section class="section" style="padding-top: 36px;">
+    <div class="section-inner">
+      <div class="st-main-grid">
+
+        <!-- Linke Spalte: Text -->
+        <div class="st-text reveal">
+          <h3>Der Stammtisch des <em>TVC88</em></h3>
+          <p>
+            Der monatliche Stammtisch ist das Herzstück unseres Vereinslebens.
+            Jeden ersten Freitag im Monat treffen sich Mitglieder, Freunde und
+            Interessierte im gemütlichen Restaurant TuS in Griesheim, um sich
+            über historische Fahrzeuge, laufende Restaurierungen und kommende
+            Veranstaltungen auszutauschen.
+          </p>
+          <p>
+            Ob erfahrener Vereinsmitglied oder neugieriger Gast – beim Stammtisch
+            sind alle willkommen. Wer Interesse am TVC88 hat oder einfach mehr
+            über historische Landmaschinen und Oldtimer erfahren möchte, findet
+            hier den direkten Draht zu unseren Mitgliedern.
+          </p>
+
+          <div class="rule-box">
+            <strong>Feste Regel:</strong> Immer der erste Freitag im Monat.
+            Fällt dieser auf einen Feiertag, weichen wir auf den zweiten Freitag aus –
+            eine Ankündigung erfolgt rechtzeitig über diese Seite.
+          </div>
+
+          <ul class="st-details-list">
+            <li>
+              <span class="di" aria-hidden="true">🚗</span>
+              <div>
+                <strong>Parkplätze</strong>
+                Ausreichend kostenlose Parkplätze direkt am Restaurant sowie
+                in der näheren Umgebung der Jahnstraße vorhanden.
+              </div>
+            </li>
+            <li>
+              <span class="di" aria-hidden="true">🚌</span>
+              <div>
+                <strong>ÖPNV</strong>
+                Bushaltestelle „Griesheim Stadtmitte" in fußläufiger Entfernung
+                (ca. 5 Minuten). Verbindungen aus Darmstadt und Rüsselsheim.
+              </div>
+            </li>
+            <li>
+              <span class="di" aria-hidden="true">🍽️</span>
+              <div>
+                <strong>Bewirtung</strong>
+                Das Restaurant TuS bietet Speisen und Getränke.
+                Eine Reservierung ist nicht notwendig – wir haben einen festen Stammtisch-Bereich.
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Rechte Spalte: Karte -->
+        <div class="reveal">
+          <div class="st-map-wrap">
+            <iframe
+              title="Karte: Restaurant TuS, Jahnstraße 20, Griesheim"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=8.5630%2C49.8540%2C8.5830%2C49.8640&amp;layer=mapnik&amp;marker=49.8590%2C8.5730"
+              allowfullscreen
+              loading="lazy"
+              aria-label="OpenStreetMap-Karte des Stammtisch-Lokals">
+            </iframe>
+            <div class="st-map-caption">
+              <span aria-hidden="true">📍</span>
+              <span><strong>Restaurant TuS</strong> · Jahnstraße 20 · 64347 Griesheim</span>
+              <a
+                href="https://www.openstreetmap.org/?mlat=49.859&amp;mlon=8.573#map=16/49.859/8.573"
+                target="_blank"
+                rel="noopener noreferrer">
+                Größere Karte →
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.st-main-grid -->
+
+      <!-- ── Nächste Stammtische ────────────────────────── -->
+      <div class="reveal">
+        <span class="section-label">Nächste Termine</span>
+        <h2 class="section-title" style="margin-bottom: 28px;">
+          Kommende <em>Stammtische</em>
+        </h2>
+        <div class="st-dates-grid" id="stammtisch-dates">
+          <p style="color:var(--muted)">Termine werden geladen …</p>
+        </div>
+      </div>
+
+      <!-- ── Kontakt-Box ─────────────────────────────────── -->
+      <div class="st-contact-box reveal">
+        <div class="icon" aria-hidden="true">💬</div>
+        <div class="txt">
+          <h3>Fragen zum Stammtisch?</h3>
+          <p>
+            Einfach eine E-Mail an
+            <a class="inline-link" href="mailto:info@tvc88.de">info@tvc88.de</a>
+            schreiben oder uns direkt auf der
+            <a class="inline-link" href="kontakt.html">Kontaktseite</a> erreichen.
+            Wir freuen uns auf Ihren Besuch!
+          </p>
+        </div>
+        <div>
+          <a class="btn btn-primary" href="kontakt.html">Kontakt aufnehmen</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       CTA: MITGLIED WERDEN
+  ════════════════════════════════════════════════════════ -->
+  <section id="cta-mitglied" class="reveal">
+    <h2>Gefällt Euch, was Ihr seht?</h2>
+    <p>
+      Besucht uns am Stammtisch und lernt den Verein kennen –
+      ganz unverbindlich. Wer sich dann anschließen möchte,
+      findet alle Infos auf unserer Mitgliedschaftsseite.
+    </p>
+    <div class="cta-buttons">
+      <a class="btn btn-white" href="verein-mitglied.html">Mitglied werden →</a>
+      <a class="btn btn-ghost" href="aktuelles-termine.html">Alle Termine</a>
+    </div>
+  </section>
+
+  <!-- Footer → js/components.js -->
+
+  <script src="data/termine.js"></script>
+  <script src="js/components.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    /* Scroll-Reveal */
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(function (el) { ro.observe(el); });
+
+    /* Nächste Stammtische aus Datendatei rendern */
+    var container = document.getElementById('stammtisch-dates');
+    if (!container || !window.TVC_TERMINE) return;
+
+    var MONATE = ['Januar','Februar','März','April','Mai','Juni',
+                  'Juli','August','September','Oktober','November','Dezember'];
+    var WOCHENTAGE = ['Sonntag','Montag','Dienstag','Mittwoch',
+                      'Donnerstag','Freitag','Samstag'];
+
+    var heute = new Date();
+    heute.setHours(0, 0, 0, 0);
+
+    var stammtische = window.TVC_TERMINE
+      .filter(function (t) {
+        return t.typ === 'stammtisch' && new Date(t.datum) >= heute;
+      })
+      .sort(function (a, b) { return new Date(a.datum) - new Date(b.datum); })
+      .slice(0, 6);
+
+    if (stammtische.length === 0) {
+      container.innerHTML = '<p style="color:var(--muted)">Aktuell sind keine Stammtische eingetragen.</p>';
+      return;
+    }
+
+    container.innerHTML = stammtische.map(function (t) {
+      var d   = new Date(t.datum);
+      var day = d.getDate().toString().padStart(2, '0');
+      var mon = ['Jan','Feb','Mär','Apr','Mai','Jun',
+                 'Jul','Aug','Sep','Okt','Nov','Dez'][d.getMonth()];
+      var yr  = d.getFullYear();
+      var wd  = WOCHENTAGE[d.getDay()];
+
+      return `
+<div class="st-date-card">
+  <div class="st-date-side">
+    <div class="day">${day}</div>
+    <div class="mon">${mon}</div>
+    <div class="yr">${yr}</div>
+  </div>
+  <div class="st-date-body">
+    <div class="wday">${wd}</div>
+    <div class="uhr">🕖 ${t.uhrzeit || '19:00 Uhr'}</div>
+    <div class="hint">Restaurant TuS</div>
+    ${t.details ? `<div class="hint" style="color:var(--rust)">${t.details}</div>` : ''}
+  </div>
+</div>`;
+    }).join('');
+
+  });
+  </script>
+</body>
+</html>

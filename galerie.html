@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bildergalerie des Traktor Veteranen Club 88 Griesheim e.V. – Fotos von Treffen, Ausfahrten und Veranstaltungen seit 2008.">
+  <title>Galerie · TVC88 Griesheim e.V.</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data/img/logo/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="data/img/logo/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="alternate icon" href="data/img/logo/favicon.ico">
+  <link rel="apple-touch-icon" href="data/img/logo/apple-touch-icon.png">
+  <style>
+
+    /* ── Jahres-Tabs ─────────────────────────────────────── */
+    .gal-tabs {
+      background: var(--paper);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: var(--nav-h, 112px);
+      z-index: 80;
+    }
+    .gal-tabs-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      gap: 0;
+    }
+    .gal-tabs-inner::-webkit-scrollbar { display: none; }
+    .gal-tab {
+      display: block;
+      padding: 13px 22px;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: .07em; text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 3px solid transparent;
+      border: none; background: none;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: color .18s, border-color .18s;
+      flex-shrink: 0;
+    }
+    .gal-tab:hover { color: var(--ink); }
+    .gal-tab.active { color: var(--rust); border-bottom-color: var(--rust); }
+
+    /* ── Photo-Zähler ────────────────────────────────────── */
+    .gal-count {
+      font-size: 12px; color: var(--muted);
+      margin-bottom: 32px;
+    }
+    .gal-count strong { color: var(--ink); }
+
+    /* ── Event-Gruppe ────────────────────────────────────── */
+    .gal-event { margin-bottom: 52px; }
+    .gal-event-header {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .gal-event-header h3 { font-size: 18px; }
+    .gal-event-date {
+      font-size: 12px; color: var(--muted);
+      font-weight: 400; font-family: inherit;
+    }
+    .gal-event-count {
+      margin-left: auto;
+      font-size: 11px; color: var(--muted);
+      font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    /* ── Foto-Raster ─────────────────────────────────────── */
+    .gal-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 900px) { .gal-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 580px) { .gal-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .gal-photo {
+      aspect-ratio: 4/3;
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .18s;
+    }
+    .gal-photo:hover { transform: scale(1.03); z-index: 1; }
+    .gal-photo:hover .gal-photo-overlay { opacity: 1; }
+
+    .gal-photo img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .gal-ph-emoji {
+      font-size: 34px; opacity: .45;
+      position: relative; z-index: 1;
+    }
+    .gal-photo-overlay {
+      position: absolute; inset: 0; z-index: 2;
+      background: rgba(28,26,22,.55);
+      display: flex; align-items: flex-end;
+      padding: 10px;
+      opacity: 0; transition: opacity .2s;
+    }
+    .gal-photo-title {
+      font-size: 11px; color: #fff;
+      font-weight: 600; line-height: 1.3;
+      text-shadow: 0 1px 3px rgba(0,0,0,.6);
+    }
+    .gal-zoom-icon {
+      position: absolute; top: 8px; right: 8px;
+      font-size: 16px; color: rgba(255,255,255,.8);
+    }
+
+    /* Farbpalette für Platzhalter */
+    .gp1 { background: linear-gradient(135deg,#3d5a3e,#5c7c40); }
+    .gp2 { background: linear-gradient(135deg,#7a4420,#c9922a); }
+    .gp3 { background: linear-gradient(135deg,#2a3d4a,#4a6575); }
+    .gp4 { background: linear-gradient(135deg,#4a3a20,#7a5c35); }
+    .gp5 { background: linear-gradient(135deg,#3d4a60,#5c6a8a); }
+    .gp6 { background: linear-gradient(135deg,#4a3060,#7a4a8a); }
+    .gp7 { background: linear-gradient(135deg,#2a4a35,#3d6a50); }
+    .gp8 { background: linear-gradient(135deg,#5a3510,#8a5a20); }
+
+    /* ── Archiv-Kacheln ──────────────────────────────────── */
+    .archiv-intro {
+      font-size: 14.5px; color: var(--muted);
+      line-height: 1.75; max-width: 620px;
+      margin-bottom: 32px;
+    }
+    .archiv-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+    .archiv-tile {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 20px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: background .18s, border-color .18s, transform .18s;
+    }
+    .archiv-tile:hover {
+      background: var(--wheat);
+      border-color: var(--rust);
+      transform: translateY(-2px);
+    }
+    .archiv-tile .yr {
+      font-family: Georgia, serif;
+      font-size: 22px; color: var(--ink);
+      font-weight: 700; display: block;
+    }
+    .archiv-tile .cnt {
+      font-size: 10px; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .1em;
+      margin-top: 4px; display: block;
+    }
+    .archiv-tile.special { border-color: var(--gold); background: #fffbf2; }
+    .archiv-tile.special .yr { color: var(--gold2, #a07520); }
+
+    /* Hinweis-Box */
+    .gal-hint {
+      background: var(--wheat);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      border-radius: 0 3px 3px 0;
+      padding: 16px 20px;
+      margin-top: 40px;
+      display: flex; gap: 12px; align-items: flex-start;
+      font-size: 13px; color: var(--muted); line-height: 1.7;
+    }
+    .gal-hint code {
+      background: rgba(0,0,0,.07); padding: 1px 5px;
+      border-radius: 3px; font-size: 12px;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* Leer-Zustand */
+    .gal-empty {
+      grid-column: 1 / -1;
+      text-align: center; padding: 50px 20px;
+      color: var(--muted); font-size: 14px;
+    }
+    .gal-empty .icon { font-size: 38px; display: block; margin-bottom: 12px; }
+
+    /* ════════════════════════════════════════════════════════
+       LIGHTBOX
+    ════════════════════════════════════════════════════════ */
+    #lightbox {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(15,12,10,.92);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: lbFadeIn .22s ease;
+    }
+    #lightbox.open { display: flex; }
+    @keyframes lbFadeIn { from { opacity:0; } to { opacity:1; } }
+
+    .lb-inner {
+      position: relative;
+      max-width: 1000px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .lb-img-wrap {
+      width: 100%;
+      max-height: 75vh;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+      min-height: 260px;
+    }
+    .lb-img-wrap img {
+      max-width: 100%; max-height: 75vh;
+      object-fit: contain; display: block;
+      border-radius: 3px;
+    }
+    .lb-placeholder {
+      width: 100%; height: 60vh;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 80px; border-radius: 3px;
+    }
+
+    .lb-caption {
+      color: rgba(255,255,255,.85);
+      font-size: 14px; text-align: center;
+      max-width: 600px; line-height: 1.6;
+    }
+    .lb-counter {
+      font-size: 11px; color: rgba(255,255,255,.45);
+      letter-spacing: .1em; text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* Navigation */
+    .lb-btn {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 50%;
+      width: 48px; height: 48px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; color: #fff;
+      cursor: pointer;
+      transition: background .18s;
+      z-index: 1;
+    }
+    .lb-btn:hover { background: rgba(255,255,255,.25); }
+    .lb-prev { left: -64px; }
+    .lb-next { right: -64px; }
+    @media (max-width: 700px) {
+      .lb-prev { left: 4px; }
+      .lb-next { right: 4px; }
+      .lb-btn { width: 40px; height: 40px; font-size: 16px; }
+    }
+
+    .lb-close {
+      position: fixed; top: 20px; right: 24px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 50%;
+      width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; color: #fff;
+      cursor: pointer;
+      transition: background .18s;
+      z-index: 9001;
+    }
+    .lb-close:hover { background: rgba(184,76,32,.7); }
+
+    /* Touch-Swipe Indikator */
+    .lb-swipe-hint {
+      font-size: 11px; color: rgba(255,255,255,.3);
+      text-align: center; margin-top: 4px;
+    }
+    @media (min-width: 700px) { .lb-swipe-hint { display: none; } }
+
+  </style>
+  <script>const TVC_PAGE = 'galerie';</script>
+</head>
+<body>
+
+  <!-- Navigation → js/components.js -->
+
+  <!-- ═══════════════════════════════════════════════════════
+       SEITEN-HERO
+  ════════════════════════════════════════════════════════ -->
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="sep">›</span>
+        <span>Galerie</span>
+      </nav>
+      <h1>📷 Bildergalerie</h1>
+      <p>Eindrücke aus unseren Treffen, Ausfahrten und Veranstaltungen seit 2008.</p>
+    </div>
+  </div>
+
+  <!-- ── Jahres-Tabs ──────────────────────────────────── -->
+  <div class="gal-tabs">
+    <div class="gal-tabs-inner" id="gal-tabs" role="tablist" aria-label="Jahr auswählen">
+      <!-- Wird von JS befüllt -->
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       HAUPTINHALT
+  ════════════════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-inner">
+
+      <div class="gal-count reveal" id="gal-count"></div>
+      <div id="gal-content">
+        <!-- Wird von JS befüllt -->
+      </div>
+
+      <!-- Hinweis -->
+      <div class="gal-hint reveal">
+        <span style="font-size:20px;flex-shrink:0;margin-top:1px" aria-hidden="true">📤</span>
+        <div>
+          <strong>Fotos einreichen:</strong>
+          Bilder in den Ordner <code>img/galerie/JAHR/</code> legen
+          und in <code>data/galerie.js</code> eintragen –
+          das neue Foto erscheint dann sofort in der Galerie.
+          Alternativ Bilder per E-Mail an
+          <a href="mailto:info@tvc88.de" style="color:var(--rust)">info@tvc88.de</a> senden.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       CTA
+  ════════════════════════════════════════════════════════ -->
+  <section id="cta-mitglied" class="reveal">
+    <h2>Selbst dabei sein?</h2>
+    <p>Beim nächsten Treffen kannst Du Deinen Oldtimer präsentieren
+       und Deine eigenen Fotos zur Galerie beisteuern.</p>
+    <div class="cta-buttons">
+      <a class="btn btn-white"  href="aktuelles-termine.html">Nächste Termine →</a>
+      <a class="btn btn-ghost"  href="verein-mitglied.html">Mitglied werden</a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       LIGHTBOX
+  ════════════════════════════════════════════════════════ -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Bildansicht">
+    <button class="lb-close" id="lb-close" aria-label="Schließen">✕</button>
+    <div class="lb-inner">
+      <div class="lb-img-wrap" id="lb-img-wrap">
+        <!-- Bild wird von JS eingefügt -->
+      </div>
+      <div>
+        <div class="lb-caption" id="lb-caption"></div>
+        <div class="lb-counter" id="lb-counter"></div>
+        <div class="lb-swipe-hint">← Wischen zum Blättern →</div>
+      </div>
+      <button class="lb-btn lb-prev" id="lb-prev" aria-label="Vorheriges Bild">‹</button>
+      <button class="lb-btn lb-next" id="lb-next" aria-label="Nächstes Bild">›</button>
+    </div>
+  </div>
+
+  <!-- Footer → js/components.js -->
+
+  <script src="data/galerie.js"></script>
+  <script src="js/components.js"></script>
+  <script>
+  (function () {
+
+    /* ── Hilfsfunktionen ───────────────────────────────── */
+    var MONATE = ['Januar','Februar','März','April','Mai','Juni',
+                  'Juli','August','September','Oktober','November','Dezember'];
+    var JUBILAEEN = [2018, 2008, 1998];
+
+    function formatDatum(iso) {
+      var d = new Date(iso);
+      return d.getDate() + '. ' + MONATE[d.getMonth()] + ' ' + d.getFullYear();
+    }
+
+    function farbklasse(n) { return 'gp' + ((n || 1)); }
+
+    /* ── Daten vorbereiten ──────────────────────────────── */
+    if (!window.TVC_GALERIE) return;
+    var alle = window.TVC_GALERIE;
+
+    // Verfügbare Jahre (mit Fotos zuerst, dann Archiv)
+    var jahre = [];
+    var jahreMap = {};
+    alle.forEach(function (e) {
+      if (!jahreMap[e.jahr]) { jahreMap[e.jahr] = []; }
+      jahreMap[e.jahr].push(e);
+    });
+
+    var mitFotos  = Object.keys(jahreMap)
+      .map(Number)
+      .filter(function (j) {
+        return jahreMap[j].some(function (e) { return e.fotos.length > 0; });
+      })
+      .sort(function (a, b) { return b - a; });
+
+    var archivJahre = Object.keys(jahreMap)
+      .map(Number)
+      .filter(function (j) {
+        return !jahreMap[j].some(function (e) { return e.fotos.length > 0; });
+      })
+      .sort(function (a, b) { return b - a; });
+
+    // URL-Parameter lesen
+    var params  = new URLSearchParams(window.location.search);
+    var urlJahr = params.get('jahr') ? Number(params.get('jahr')) : null;
+    var urlArchiv = params.has('archiv');
+
+    var aktJahr = urlJahr && jahreMap[urlJahr] ? urlJahr
+                : urlArchiv ? 'archiv'
+                : mitFotos[0] || 'archiv';
+
+    /* ── Tabs rendern ──────────────────────────────────── */
+    var tabsEl = document.getElementById('gal-tabs');
+
+    function renderTabs(aktiv) {
+      var html = mitFotos.map(function (j) {
+        return `<button class="gal-tab ${aktiv === j ? 'active' : ''}"
+                  data-jahr="${j}" role="tab"
+                  aria-selected="${aktiv === j}">${j}</button>`;
+      }).join('');
+      html += `<button class="gal-tab ${aktiv === 'archiv' ? 'active' : ''}"
+                data-jahr="archiv" role="tab"
+                aria-selected="${aktiv === 'archiv'}">🗂️ Archiv</button>`;
+      tabsEl.innerHTML = html;
+
+      tabsEl.querySelectorAll('.gal-tab').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var j = this.dataset.jahr === 'archiv' ? 'archiv' : Number(this.dataset.jahr);
+          renderAll(j);
+          // URL aktualisieren (ohne Seite neu zu laden)
+          var url = new URL(window.location);
+          if (j === 'archiv') {
+            url.searchParams.delete('jahr');
+            url.searchParams.set('archiv', '1');
+          } else {
+            url.searchParams.set('jahr', j);
+            url.searchParams.delete('archiv');
+          }
+          history.replaceState(null, '', url);
+        });
+      });
+    }
+
+    /* ── Foto-Raster einer Gruppe ───────────────────────── */
+    var alleFotos = []; // für Lightbox
+
+    function renderFotoGrid(fotos, startIdx) {
+      return fotos.map(function (f, i) {
+        var idx = startIdx + i;
+        var cls = farbklasse(f.farbe);
+        return `
+<div class="gal-photo ${cls}" data-lb-idx="${idx}" tabindex="0"
+     role="button" aria-label="${f.titel}">
+  ${f.datei
+    ? `<img src="${f.datei}" alt="${f.titel}" loading="lazy">`
+    : `<span class="gal-ph-emoji" aria-hidden="true">${f.emoji || '📷'}</span>`}
+  <div class="gal-photo-overlay" aria-hidden="true">
+    <span class="gal-photo-title">${f.titel}</span>
+    <span class="gal-zoom-icon">🔍</span>
+  </div>
+</div>`;
+      }).join('');
+    }
+
+    /* ── Jahres-Inhalt rendern ──────────────────────────── */
+    function renderJahr(j) {
+      var events = (jahreMap[j] || [])
+        .filter(function (e) { return e.fotos.length > 0; })
+        .sort(function (a, b) { return new Date(b.datum) - new Date(a.datum); });
+
+      alleFotos = [];
+      events.forEach(function (e) { alleFotos = alleFotos.concat(e.fotos); });
+
+      var total = alleFotos.length;
+      document.getElementById('gal-count').innerHTML =
+        `<strong>${total} Foto${total !== 1 ? 's'  : ''}</strong> aus dem Jahr ${j}`;
+
+      if (events.length === 0) {
+        return `<div class="gal-empty">
+          <span class="icon">📭</span>
+          Für ${j} sind noch keine Fotos hinterlegt.
+        </div>`;
+      }
+
+      var html = '';
+      var globalIdx = 0;
+      events.forEach(function (e) {
+        html += `
+<div class="gal-event">
+  <div class="gal-event-header">
+    <h3>${e.event}</h3>
+    <span class="gal-event-date">${formatDatum(e.datum)}</span>
+    <span class="gal-event-count">${e.fotos.length} Foto${e.fotos.length !== 1 ? 's' : ''}</span>
+  </div>
+  <div class="gal-grid">
+    ${renderFotoGrid(e.fotos, globalIdx)}
+  </div>
+</div>`;
+        globalIdx += e.fotos.length;
+      });
+      return html;
+    }
+
+    /* ── Archiv rendern ─────────────────────────────────── */
+    function renderArchiv() {
+      document.getElementById('gal-count').innerHTML =
+        `<strong>${archivJahre.length} Archiv-Jahre</strong> – 2008 bis 2021`;
+
+      return `
+<p class="archiv-intro">
+  Die Fotos aus dem Vereinsarchiv (2008–2021) werden nach und nach
+  digitalisiert und hier eingestellt. Klickt auf ein Jahr,
+  um zu sehen was vorhanden ist – oder meldet Euch, wenn Ihr
+  Fotos aus dieser Zeit habt!
+</p>
+<div class="archiv-grid">
+  ${archivJahre.map(function (j) {
+    var isJub = JUBILAEEN.indexOf(j) !== -1;
+    return `
+<div class="archiv-tile ${isJub ? 'special' : ''}"
+     title="${j}${isJub ? ' – Jubiläumsjahr' : ''}">
+  <span class="yr">${j}</span>
+  <span class="cnt">${isJub ? '🏆 Jubiläum' : 'Archiv'}</span>
+</div>`;
+  }).join('')}
+</div>
+<div style="background:var(--paper);border:1px solid var(--border);border-radius:3px;
+     padding:24px 28px;text-align:center;">
+  <p style="font-size:14px;color:var(--muted);line-height:1.75;max-width:500px;margin:0 auto 18px">
+    Hast Du Fotos aus unserer Vereinsgeschichte? Wir freuen uns über
+    jeden Beitrag zur Archiv-Galerie!
+  </p>
+  <a class="btn btn-primary" href="mailto:info@tvc88.de?subject=Archiv-Fotos TVC88">
+    📧 Fotos einsenden
+  </a>
+</div>`;
+    }
+
+    /* ── Gesamte Seite rendern ──────────────────────────── */
+    function renderAll(j) {
+      aktJahr = j;
+      renderTabs(j);
+      var content = document.getElementById('gal-content');
+      content.innerHTML = j === 'archiv' ? renderArchiv() : renderJahr(j);
+
+      // Foto-Click-Handler
+      content.querySelectorAll('.gal-photo').forEach(function (ph) {
+        ph.addEventListener('click', function () { lbOpen(Number(this.dataset.lbIdx)); });
+        ph.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { lbOpen(Number(this.dataset.lbIdx)); }
+        });
+      });
+
+      // Karten einblenden
+      setTimeout(function () {
+        var items = content.querySelectorAll('.gal-photo, .gal-event, .archiv-tile');
+        var co = new IntersectionObserver(function (obs) {
+          obs.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            var i = Array.from(items).indexOf(entry.target);
+            setTimeout(function () {
+              entry.target.style.opacity   = '1';
+              entry.target.style.transform = 'none';
+            }, i * 30);
+            co.unobserve(entry.target);
+          });
+        }, { threshold: 0.05 });
+        items.forEach(function (el) {
+          el.style.opacity   = '0';
+          el.style.transform = 'translateY(10px)';
+          el.style.transition = 'opacity .4s ease, transform .4s ease';
+          co.observe(el);
+        });
+      }, 20);
+    }
+
+    /* ════════════════════════════════════════════════════════
+       LIGHTBOX
+    ════════════════════════════════════════════════════════ */
+    var lb        = document.getElementById('lightbox');
+    var lbImgWrap = document.getElementById('lb-img-wrap');
+    var lbCaption = document.getElementById('lb-caption');
+    var lbCounter = document.getElementById('lb-counter');
+    var lbCurrent = 0;
+
+    function lbShow(idx) {
+      lbCurrent = idx;
+      var f = alleFotos[idx];
+      if (!f) return;
+
+      if (f.datei) {
+        lbImgWrap.innerHTML = `<img src="${f.datei}" alt="${f.titel}">`;
+      } else {
+        var cls = farbklasse(f.farbe);
+        lbImgWrap.innerHTML =
+          `<div class="lb-placeholder ${cls}"><span style="font-size:100px;opacity:.4">${f.emoji || '📷'}</span></div>`;
+      }
+      lbCaption.textContent = f.titel;
+      lbCounter.textContent = (idx + 1) + ' / ' + alleFotos.length;
+    }
+
+    function lbOpen(idx) {
+      lbShow(idx);
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      lb.focus();
+    }
+    function lbClose() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function lbPrev() { lbShow((lbCurrent - 1 + alleFotos.length) % alleFotos.length); }
+    function lbNext() { lbShow((lbCurrent + 1) % alleFotos.length); }
+
+    document.getElementById('lb-close').addEventListener('click', lbClose);
+    document.getElementById('lb-prev').addEventListener('click', lbPrev);
+    document.getElementById('lb-next').addEventListener('click', lbNext);
+
+    // Hintergrund-Klick schließt Lightbox
+    lb.addEventListener('click', function (e) { if (e.target === lb) lbClose(); });
+
+    // Tastatur
+    document.addEventListener('keydown', function (e) {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape')     lbClose();
+      if (e.key === 'ArrowLeft')  lbPrev();
+      if (e.key === 'ArrowRight') lbNext();
+    });
+
+    // Touch-Swipe
+    var touchStartX = 0;
+    lb.addEventListener('touchstart', function (e) {
+      touchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+    lb.addEventListener('touchend', function (e) {
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 50) { dx < 0 ? lbNext() : lbPrev(); }
+    }, { passive: true });
+
+    /* ── Scroll-Reveal für statische Elemente ───────────── */
+    document.addEventListener('DOMContentLoaded', function () {
+      var ro = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+        });
+      }, { threshold: 0.07 });
+      document.querySelectorAll('.reveal').forEach(function (el) { ro.observe(el); });
+    });
+
+    /* ── Start ──────────────────────────────────────────── */
+    document.addEventListener('DOMContentLoaded', function () {
+      renderAll(aktJahr);
+    });
+
+  })();
+  </script>
+</body>
+</html>

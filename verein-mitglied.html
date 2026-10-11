@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mitglied werden beim Traktor Veteranen Club 88 Griesheim e.V. – Aufnahmeformular, Satzung und alle Infos zur Mitgliedschaft.">
+  <title>Mitglied werden · TVC88 Griesheim e.V.</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data/img/logo/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="data/img/logo/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="alternate icon" href="data/img/logo/favicon.ico">
+  <link rel="apple-touch-icon" href="data/img/logo/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/verein.css">
+  <style>
+    /* Beitragsübersicht */
+    .beitrag-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 24px 0;
+    }
+    .beitrag-table thead tr { background: var(--forest2); color: #fff; }
+    .beitrag-table th {
+      padding: 12px 18px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .beitrag-table td {
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .beitrag-table tr:last-child td { border-bottom: none; }
+    .beitrag-table tr:nth-child(even) td { background: #f5f1e8; }
+    .beitrag-table .betrag { font-weight: 700; color: var(--ink); }
+
+    /* FAQ */
+    .faq-list { margin-top: 32px; }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-item:first-child { border-top: 1px solid var(--border); }
+    .faq-q {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 16px 0;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: Georgia, serif;
+      color: var(--ink);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .faq-q:hover { color: var(--rust); }
+    .faq-icon { font-size: 20px; flex-shrink: 0; transition: transform .2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a {
+      display: none;
+      padding: 0 0 18px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .faq-item.open .faq-a { display: block; }
+  </style>
+  <script>const TVC_PAGE = 'verein';</script>
+</head>
+<body>
+
+  <!-- Navigation → js/components.js -->
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="sep">›</span>
+        <span>Der Verein</span>
+        <span class="sep">›</span>
+        <span>Mitglied werden</span>
+      </nav>
+      <h1>🤝 Mitglied werden</h1>
+      <p>Werde Teil einer leidenschaftlichen Gemeinschaft – offen für alle, die historische Fahrzeuge lieben.</p>
+    </div>
+  </div>
+
+  <!-- Unternavigation -->
+  <nav class="verein-subnav" aria-label="Vereinsbereich">
+    <div class="verein-subnav-inner">
+      <a class="verein-subnav-link" href="verein-geschichte.html">ℹ️ Geschichte &amp; Chronik</a>
+      <a class="verein-subnav-link" href="verein-vorstand.html">👥 Vorstand</a>
+      <a class="verein-subnav-link active" href="verein-mitglied.html">🤝 Mitglied werden</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════
+       VORTEILE
+  ════════════════════════════════════════════════════════ -->
+  <section class="section section-paper">
+    <div class="section-inner">
+      <div class="section-top reveal">
+        <div>
+          <span class="section-label">Warum Mitglied?</span>
+          <h2 class="section-title">Was eine Mitgliedschaft<br><em>bietet</em></h2>
+        </div>
+      </div>
+      <div class="mitglied-grid reveal">
+        <div class="vorteil-card">
+          <span class="vorteil-icon">🚜</span>
+          <h3>Fahrzeuge präsentieren</h3>
+          <p>Eigene historische Fahrzeuge bei allen Vereinsveranstaltungen und Ausfahrten mitbringen und zeigen.</p>
+        </div>
+        <div class="vorteil-card">
+          <span class="vorteil-icon">🔧</span>
+          <h3>Wissen &amp; Netzwerk</h3>
+          <p>Zugang zum Erfahrungswissen erfahrener Restauratoren. Tipps zu Ersatzteilen, Werkstätten und Restaurierung.</p>
+        </div>
+        <div class="vorteil-card">
+          <span class="vorteil-icon">📅</span>
+          <h3>Exklusive Termine</h3>
+          <p>Teilnahme an internen Treffen, Ausfahrten und Vereinsveranstaltungen, die nicht öffentlich ausgeschrieben werden.</p>
+        </div>
+        <div class="vorteil-card">
+          <span class="vorteil-icon">📷</span>
+          <h3>Galerie &amp; Presse</h3>
+          <p>Fahrzeuge und Bilder erscheinen in der Vereinsgalerie und werden bei Presseberichten berücksichtigt.</p>
+        </div>
+        <div class="vorteil-card">
+          <span class="vorteil-icon">🍺</span>
+          <h3>Monatlicher Stammtisch</h3>
+          <p>Jeden ersten Freitag im Monat im gemütlichen Vereinslokal – Austausch, Planung und gute Gespräche.</p>
+        </div>
+        <div class="vorteil-card">
+          <span class="vorteil-icon">🤝</span>
+          <h3>Gemeinschaft</h3>
+          <p>Mitgestalten des Vereinslebens, Mitbestimmung bei der Jahreshauptversammlung, Teil einer tollen Gemeinschaft sein.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SO WIRST DU MITGLIED
+  ════════════════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-top reveal">
+        <div>
+          <span class="section-label">Schritt für Schritt</span>
+          <h2 class="section-title">So wirst Du<br><em>Mitglied</em></h2>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:52px; align-items:start;"
+           class="reveal" id="schritte-grid">
+
+        <!-- Schritte links -->
+        <div class="schritte-list">
+          <div class="schritt-item">
+            <div class="schritt-num">1</div>
+            <div class="schritt-body">
+              <h3>Stammtisch besuchen</h3>
+              <p>Komm einfach unverbindlich an einem ersten Freitag im Monat ab 19:00 Uhr ins Restaurant TuS, Jahnstraße 20, Griesheim vorbei – kein Mitgliedsausweis, keine Anmeldung nötig.</p>
+              <div class="schritt-action">
+                <a class="link-arrow" href="aktuelles-stammtisch.html">Stammtisch-Info →</a>
+              </div>
+            </div>
+          </div>
+          <div class="schritt-item">
+            <div class="schritt-num">2</div>
+            <div class="schritt-body">
+              <h3>Aufnahmeformular ausfüllen</h3>
+              <p>Das Formular kann unten heruntergeladen, ausgedruckt und ausgefüllt werden. Es kann auch beim Stammtisch persönlich abgeholt werden.</p>
+              <div class="schritt-action">
+                <a class="btn btn-primary" href="data/img/aufnahmeformular.pdf" download>
+                  📄 Formular herunterladen
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="schritt-item">
+            <div class="schritt-num">3</div>
+            <div class="schritt-body">
+              <h3>Formular abgeben</h3>
+              <p>Das ausgefüllte Formular beim Vorstand abgeben – persönlich am Stammtisch oder per Post an die Vereinsadresse.</p>
+            </div>
+          </div>
+          <div class="schritt-item">
+            <div class="schritt-num">4</div>
+            <div class="schritt-body">
+              <h3>Bestätigung &amp; Willkommen!</h3>
+              <p>Nach Prüfung durch den Vorstand erhältst du eine Bestätigung. Mit der ersten Beitragszahlung bist du offiziell Mitglied des TVC88 Griesheim e.V.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Download + Beiträge rechts -->
+        <div>
+          <!-- Download-Box -->
+          <div class="download-box">
+            <div class="icon" aria-hidden="true">📂</div>
+            <div class="text">
+              <h3>Dokumente herunterladen</h3>
+              <p>Aufnahmeformular und Satzung als PDF – zum Ausdrucken und Nachschlagen.</p>
+            </div>
+            <div class="download-btns">
+              <a class="btn btn-white" href="data/img/aufnahmeformular.pdf" download>
+                📄 Aufnahmeformular
+              </a>
+              <a class="btn btn-outline" href="data/img/satzung.pdf" download
+                 style="border-color:rgba(255,255,255,.4);color:#fff">
+                📜 Vereinssatzung
+              </a>
+            </div>
+          </div>
+
+          <!-- Mitgliedsbeiträge -->
+          <div class="beitrag-box">
+            <strong>Hinweis:</strong> Die genauen Mitgliedsbeiträge werden auf der
+            Jahreshauptversammlung festgelegt und können beim Vorstand erfragt werden.
+            Als Orientierung gelten folgende Richtwerte:
+          </div>
+          <table class="beitrag-table">
+            <thead>
+              <tr>
+                <th>Kategorie</th>
+                <th>Jahresbeitrag</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ordentliches Mitglied</td>
+                <td class="betrag">auf Anfrage</td>
+              </tr>
+              <tr>
+                <td>Jugendmitglied (bis 18 Jahre)</td>
+                <td class="betrag">auf Anfrage</td>
+              </tr>
+              <tr>
+                <td>Fördermitglied</td>
+                <td class="betrag">auf Anfrage</td>
+              </tr>
+              <tr>
+                <td>Familienmitgliedschaft</td>
+                <td class="betrag">auf Anfrage</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size:12px;color:var(--muted);margin-top:8px">
+            * Aktuelle Beträge beim Vorstand oder am Stammtisch erfragen.
+          </p>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div style="max-width:720px; margin-top:60px;" class="reveal">
+        <span class="section-label">Häufige Fragen</span>
+        <h2 class="section-title" style="margin-bottom:8px">FAQ zur<br><em>Mitgliedschaft</em></h2>
+        <div class="faq-list" id="faq">
+          <!-- Wird von JS eingefügt -->
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta-mitglied" class="reveal">
+    <h2>Bereit dabei zu sein?</h2>
+    <p>
+      Wir freuen uns über jeden, der historische Fahrzeuge schätzt –
+      egal ob als aktiver Fahrer oder als Freund und Förderer des Clubs.
+    </p>
+    <div class="cta-buttons">
+      <a class="btn btn-white"  href="data/img/aufnahmeformular.pdf" download>📄 Formular herunterladen</a>
+      <a class="btn btn-ghost"  href="kontakt.html">Fragen? Schreib uns!</a>
+    </div>
+  </section>
+
+  <!-- Footer → js/components.js -->
+
+  <script src="js/components.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    /* Scroll-Reveal */
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+      });
+    }, { threshold: 0.07 });
+    document.querySelectorAll('.reveal').forEach(function (el) { ro.observe(el); });
+
+    /* Mobile: Schritte einspaltig */
+    var grid = document.getElementById('schritte-grid');
+    function checkBreak() {
+      grid.style.gridTemplateColumns = window.innerWidth < 760 ? '1fr' : '1fr 1fr';
+    }
+    checkBreak();
+    window.addEventListener('resize', checkBreak);
+
+    /* FAQ */
+    var faqs = [
+      {
+        q: 'Muss ich selbst ein historisches Fahrzeug besitzen?',
+        a: 'Nein. Beim TVC88 sind alle willkommen, die historische Fahrzeuge lieben – '
+         + 'egal ob als Besitzer, Enthusiast oder einfach als Freund des Vereinslebens. '
+         + 'Als Fördermitglied kann man den Verein auch ohne eigenes Fahrzeug unterstützen.'
+      },
+      {
+        q: 'Ab welchem Baujahr gilt ein Fahrzeug als historisch?',
+        a: 'In Deutschland gilt ein Fahrzeug ab 30 Jahren als Oldtimer und kann mit dem '
+         + 'H-Kennzeichen zugelassen werden. Als Faustregel gilt: Fahrzeuge bis ca. 1985 '
+         + 'sind bei uns herzlich willkommen – aber auch jüngere Fahrzeuge mit besonderem Charakter.'
+      },
+      {
+        q: 'Wie oft muss ich an Vereinsveranstaltungen teilnehmen?',
+        a: 'Es gibt keine Mindestanwesenheitspflicht. Natürlich freuen wir uns über '
+         + 'aktive Teilnahme am Stammtisch und bei Veranstaltungen – aber Mitglied '
+         + 'sein bedeutet kein Pflichtprogramm.'
+      },
+      {
+        q: 'Kann ich auch aus einer anderen Stadt Mitglied werden?',
+        a: 'Ja, selbstverständlich. Wir haben Mitglieder aus dem gesamten Rhein-Main-Gebiet. '
+         + 'Wichtig ist die Freude an historischen Fahrzeugen – nicht der Wohnort.'
+      },
+      {
+        q: 'Wie lange dauert die Aufnahme?',
+        a: 'Nach Abgabe des ausgefüllten Formulars entscheidet der Vorstand zeitnah, '
+         + 'in der Regel innerhalb weniger Wochen. Bei der nächsten Hauptversammlung '
+         + 'wird die Aufnahme formell bestätigt.'
+      },
+      {
+        q: 'Kann ich die Mitgliedschaft auch kündigen?',
+        a: 'Ja, eine Mitgliedschaft kann jederzeit zum Ende des Kalenderjahres '
+         + 'schriftlich gekündigt werden. Die genauen Bedingungen sind in der Satzung geregelt.'
+      }
+    ];
+
+    var faqEl = document.getElementById('faq');
+    faqEl.innerHTML = faqs.map(function (f, i) {
+      return `
+<div class="faq-item">
+  <button class="faq-q" aria-expanded="false" aria-controls="faq-a-${i}">
+    <span>${f.q}</span>
+    <span class="faq-icon" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a" id="faq-a-${i}" role="region">${f.a}</div>
+</div>`;
+    }).join('');
+
+    faqEl.querySelectorAll('.faq-q').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var item = this.closest('.faq-item');
+        var isOpen = item.classList.toggle('open');
+        this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    });
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Presseberichte über den Traktor Veteranen Club 88 Griesheim e.V. – Berichte aus Darmstädter Echo, Griesheimer Anzeiger und weiteren Medien.">
+  <title>Presseberichte · TVC88 Griesheim e.V.</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data/img/logo/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="data/img/logo/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="alternate icon" href="data/img/logo/favicon.ico">
+  <link rel="apple-touch-icon" href="data/img/logo/apple-touch-icon.png">
+  <style>
+    /* ── Medien-Filter ──────────────────────────────────── */
+    .filter-bar {
+      display: flex; align-items: center;
+      gap: 10px; flex-wrap: wrap;
+      margin-bottom: 36px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .filter-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--muted); margin-right: 4px;
+    }
+    .filter-btn {
+      padding: 7px 16px;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--paper); color: var(--muted);
+      cursor: pointer;
+      transition: background .18s, color .18s, border-color .18s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--rust); color: #fff; border-color: var(--rust);
+    }
+
+    /* ── Presse-Karte ───────────────────────────────────── */
+    .presse-list { display: flex; flex-direction: column; gap: 18px; }
+
+    .pr-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      overflow: hidden;
+      transition: transform .18s, box-shadow .18s;
+    }
+    .pr-card:hover { transform: translateX(4px); box-shadow: 0 4px 22px var(--shadow); }
+    .pr-card.hidden { display: none; }
+    @media (max-width: 580px) {
+      .pr-card { grid-template-columns: 70px 1fr; }
+      .pr-action { display: none; }
+    }
+
+    /* Datum-Streifen */
+    .pr-date {
+      background: var(--forest2);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 16px 8px;
+      text-align: center;
+    }
+    .pr-date .day  { font-family: Georgia,serif; font-size: 26px; color: #fff; line-height: 1; }
+    .pr-date .mon  { font-size: 10px; font-weight: 700; letter-spacing: .12em;
+                     text-transform: uppercase; color: #8fb49a; margin-top: 2px; }
+    .pr-date .yr   { font-size: 9px; color: #4a6a52; margin-top: 1px; }
+
+    /* Inhalt */
+    .pr-body { padding: 16px 20px; display: flex; flex-direction: column; gap: 6px; }
+    .pr-medium {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--rust);
+    }
+    .pr-body h3 { font-size: 16px; line-height: 1.35; }
+    .pr-body p  { font-size: 13px; color: var(--muted); line-height: 1.65; }
+    .pr-meta {
+      font-size: 11px; color: var(--muted);
+      display: flex; gap: 14px; flex-wrap: wrap; margin-top: 2px;
+    }
+
+    /* Link-Aktion */
+    .pr-action {
+      padding: 16px 18px;
+      display: flex; align-items: center;
+      flex-shrink: 0;
+    }
+    .pr-action a, .pr-action span {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--rust); white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 4px;
+      transition: gap .15s;
+    }
+    .pr-action a:hover { gap: 8px; }
+    .pr-action .unavail { color: var(--muted); font-style: italic; }
+
+    /* ── Statistik-Leiste ───────────────────────────────── */
+    .presse-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 520px) { .presse-stats { grid-template-columns: 1fr; } }
+    .stat-box {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 20px;
+      text-align: center;
+    }
+    .stat-box .num {
+      font-family: Georgia,serif;
+      font-size: 36px; color: var(--rust); line-height: 1;
+    }
+    .stat-box .lbl {
+      font-size: 11px; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .1em; margin-top: 5px;
+    }
+
+    /* ── Hinweis-Box ────────────────────────────────────── */
+    .presse-hint {
+      background: var(--forest2);
+      border-radius: 3px; padding: 26px 30px;
+      margin-top: 40px;
+      display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap;
+    }
+    .presse-hint .icon { font-size: 34px; flex-shrink: 0; }
+    .presse-hint h3 { font-size: 16px; color: #fff; margin-bottom: 6px; }
+    .presse-hint p  { font-size: 13px; color: #8fb49a; line-height: 1.7; }
+    .presse-hint a  { color: var(--gold); }
+  </style>
+  <script>const TVC_PAGE = 'aktuelles';</script>
+</head>
+<body>
+
+  <!-- Navigation → js/components.js -->
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="sep">›</span>
+        <a href="aktuelles-news.html">Aktuelles</a>
+        <span class="sep">›</span>
+        <span>Presseberichte</span>
+      </nav>
+      <h1>📄 Presseberichte</h1>
+      <p>Was Zeitungen und Online-Medien über den TVC88 berichten.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-inner">
+
+      <!-- Statistiken -->
+      <div class="presse-stats reveal" id="presse-stats"></div>
+
+      <!-- Filter -->
+      <div class="filter-bar reveal" id="filter-bar" role="group" aria-label="Nach Medium filtern">
+        <span class="filter-label">Medium:</span>
+        <!-- Buttons werden von JS generiert -->
+      </div>
+
+      <!-- Berichte -->
+      <div class="presse-list reveal" id="presse-list"></div>
+
+      <!-- Presseanfragen -->
+      <div class="presse-hint reveal">
+        <div class="icon" aria-hidden="true">📰</div>
+        <div>
+          <h3>Presseanfragen &amp; Bildmaterial</h3>
+          <p>
+            Für Presseanfragen, Interviewwünsche oder die Anforderung von
+            Bildmaterial steht der Vorstand gerne zur Verfügung.<br>
+            Kontakt: <a href="mailto:info@tvc88.de">info@tvc88.de</a> ·
+            Nächster persönlicher Termin: <a href="aktuelles-stammtisch.html">Stammtisch</a>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="cta-mitglied" class="reveal">
+    <h2>Ihr habt über uns berichtet?</h2>
+    <p>Wenn wir einen Bericht übersehen haben, freuen wir uns
+       über einen Hinweis – damit er hier erscheint.</p>
+    <div class="cta-buttons">
+      <a class="btn btn-white" href="mailto:info@tvc88.de?subject=Pressebericht TVC88">
+        📧 Bericht melden
+      </a>
+      <a class="btn btn-ghost" href="aktuelles-news.html">Alle News</a>
+    </div>
+  </section>
+
+  <!-- Footer → js/components.js -->
+
+  <script src="data/presse.js"></script>
+  <script src="js/components.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+      });
+    }, { threshold: 0.07 });
+    document.querySelectorAll('.reveal').forEach(function (el) { ro.observe(el); });
+
+    if (!window.TVC_PRESSE) return;
+
+    var MONATE_KURZ = ['Jan','Feb','Mär','Apr','Mai','Jun',
+                       'Jul','Aug','Sep','Okt','Nov','Dez'];
+    var MONATE_LANG = ['Januar','Februar','März','April','Mai','Juni',
+                       'Juli','August','September','Oktober','November','Dezember'];
+
+    var alle = window.TVC_PRESSE.slice()
+      .sort(function (a, b) { return new Date(b.datum) - new Date(a.datum); });
+
+    /* Medien ermitteln */
+    var medien = [];
+    alle.forEach(function (p) {
+      if (medien.indexOf(p.zeitung) === -1) medien.push(p.zeitung);
+    });
+
+    /* Statistiken */
+    var jahre = new Set(alle.map(function (p) { return new Date(p.datum).getFullYear(); }));
+    document.getElementById('presse-stats').innerHTML = `
+<div class="stat-box">
+  <div class="num">${alle.length}</div>
+  <div class="lbl">Berichte gesamt</div>
+</div>
+<div class="stat-box">
+  <div class="num">${medien.length}</div>
+  <div class="lbl">Verschiedene Medien</div>
+</div>
+<div class="stat-box">
+  <div class="num">${jahre.size}</div>
+  <div class="lbl">Jahre mit Berichterstattung</div>
+</div>`;
+
+    /* Filter-Buttons */
+    var filterBar = document.getElementById('filter-bar');
+    var allBtn = `<button class="filter-btn active" data-filter="alle">Alle</button>`;
+    var medBtn = medien.map(function (m) {
+      return `<button class="filter-btn" data-filter="${m}">${m}</button>`;
+    }).join('');
+    filterBar.innerHTML =
+      '<span class="filter-label">Medium:</span>' + allBtn + medBtn;
+
+    /* Karten-HTML */
+    function karteHtml(p) {
+      var d   = new Date(p.datum);
+      var day = d.getDate().toString().padStart(2, '0');
+      var mon = MONATE_KURZ[d.getMonth()];
+      var yr  = d.getFullYear();
+      return `
+<div class="pr-card" data-medium="${p.zeitung}">
+  <div class="pr-date">
+    <div class="day">${day}</div>
+    <div class="mon">${mon}</div>
+    <div class="yr">${yr}</div>
+  </div>
+  <div class="pr-body">
+    <div class="pr-medium">${p.zeitung}</div>
+    <h3>${p.titel}</h3>
+    <p>${p.teaser}</p>
+    <div class="pr-meta">
+      ${p.autor ? `<span>✍️ ${p.autor}</span>` : ''}
+      <span>📅 ${d.getDate()}. ${MONATE_LANG[d.getMonth()]} ${yr}</span>
+    </div>
+  </div>
+  <div class="pr-action">
+    ${p.url
+      ? `<a href="${p.url}" target="_blank" rel="noopener">Artikel lesen →</a>`
+      : `<span class="unavail">Nur Print</span>`}
+  </div>
+</div>`;
+    }
+
+    /* Liste rendern */
+    var liste = document.getElementById('presse-list');
+    liste.innerHTML = alle.map(karteHtml).join('');
+
+    /* Stagger */
+    var cards = liste.querySelectorAll('.pr-card');
+    var co = new IntersectionObserver(function (obs) {
+      obs.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var i = Array.from(cards).indexOf(entry.target);
+        setTimeout(function () {
+          entry.target.style.opacity   = '1';
+          entry.target.style.transform = 'none';
+        }, i * 70);
+        co.unobserve(entry.target);
+      });
+    }, { threshold: 0.05 });
+    cards.forEach(function (c) {
+      c.style.opacity = '0'; c.style.transform = 'translateX(-8px)';
+      c.style.transition = 'opacity .4s ease, transform .4s ease';
+      co.observe(c);
+    });
+
+    /* Filter */
+    filterBar.querySelectorAll('.filter-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        filterBar.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        var f = this.dataset.filter;
+        liste.querySelectorAll('.pr-card').forEach(function (c) {
+          c.classList.toggle('hidden', f !== 'alle' && c.dataset.medium !== f);
+        });
+      });
+    });
+  });
+  </script>
+</body>
+</html>

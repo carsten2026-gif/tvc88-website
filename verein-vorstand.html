@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Der Vorstand des Traktor Veteranen Club 88 Griesheim e.V. – Ansprechpartner und Kontakt.">
+  <title>Vorstand · TVC88 Griesheim e.V.</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data/img/logo/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="data/img/logo/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="alternate icon" href="data/img/logo/favicon.ico">
+  <link rel="apple-touch-icon" href="data/img/logo/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/verein.css">
+  <script>const TVC_PAGE = 'verein';</script>
+</head>
+<body>
+
+  <!-- Navigation → js/components.js -->
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="sep">›</span>
+        <span>Der Verein</span>
+        <span class="sep">›</span>
+        <span>Vorstand</span>
+      </nav>
+      <h1>👥 Vorstand</h1>
+      <p>Die gewählten Vertreter des TVC88 – Eure Ansprechpartner für alle Vereinsangelegenheiten.</p>
+    </div>
+  </div>
+
+  <!-- Unternavigation -->
+  <nav class="verein-subnav" aria-label="Vereinsbereich">
+    <div class="verein-subnav-inner">
+      <a class="verein-subnav-link" href="verein-geschichte.html">ℹ️ Geschichte &amp; Chronik</a>
+      <a class="verein-subnav-link active" href="verein-vorstand.html">👥 Vorstand</a>
+      <a class="verein-subnav-link" href="verein-mitglied.html">🤝 Mitglied werden</a>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="section-inner">
+
+      <div class="section-top reveal">
+        <div>
+          <span class="section-label">Amtsperiode 2022–2024</span>
+          <h2 class="section-title">Unser <em>Vorstand</em></h2>
+          <p class="section-desc">Der Vorstand wird auf der Jahreshauptversammlung für jeweils zwei Jahre gewählt.</p>
+        </div>
+      </div>
+
+      <div class="vorstand-grid reveal" id="vorstand-grid">
+        <!-- Wird von JavaScript befüllt -->
+      </div>
+
+      <!-- Hinweis Kontakt -->
+      <div style="
+        background:var(--paper); border:1px solid var(--border);
+        border-left:4px solid var(--forest); border-radius:0 3px 3px 0;
+        padding:18px 22px; margin-top:40px;
+        font-size:13.5px; color:var(--muted); line-height:1.75;
+        display:flex; gap:12px; align-items:flex-start;
+      " class="reveal">
+        <span style="font-size:22px;flex-shrink:0">💬</span>
+        <div>
+          <strong style="color:var(--ink)">Allgemeine Anfragen</strong> bitte per E-Mail an
+          <a href="mailto:info@tvc88.de" style="color:var(--rust);font-weight:600">info@tvc88.de</a>
+          oder einfach beim nächsten Stammtisch persönlich ansprechen –
+          jeden ersten Freitag im Monat ab 19:00 Uhr im Restaurant TuS, Griesheim.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta-mitglied" class="reveal">
+    <h2>Interesse am Verein?</h2>
+    <p>
+      Kommt zum Stammtisch oder schreibt uns – wir freuen uns über
+      jeden, der historische Fahrzeuge liebt.
+    </p>
+    <div class="cta-buttons">
+      <a class="btn btn-white" href="verein-mitglied.html">Mitglied werden →</a>
+      <a class="btn btn-ghost" href="kontakt.html">Kontakt aufnehmen</a>
+    </div>
+  </section>
+
+  <!-- Footer → js/components.js -->
+
+  <script src="data/verein.js"></script>
+  <script src="js/components.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    /* Scroll-Reveal */
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+      });
+    }, { threshold: 0.07 });
+    document.querySelectorAll('.reveal').forEach(function (el) { ro.observe(el); });
+
+    /* Vorstand rendern */
+    if (!window.TVC_VORSTAND) return;
+    var grid = document.getElementById('vorstand-grid');
+
+    /* CSS-Klasse je Funktion */
+    function cardKlasse(funktion) {
+      if (funktion.includes('1. Vorsitz')) return 'vorsitz';
+      if (funktion.includes('2. Vorsitz') || funktion.includes('Schatz') || funktion.includes('Schrift')) return 'vorstand';
+      return 'beisitzer';
+    }
+
+    grid.innerHTML = window.TVC_VORSTAND.map(function (v) {
+      var cls = cardKlasse(v.funktion);
+      return `
+<div class="vs-card ${cls}">
+  <div class="vs-photo">
+    ${v.bild
+      ? `<img src="${v.bild}" alt="${v.name}" loading="lazy">`
+      : `<span>${v.emoji || '👤'}</span>`}
+  </div>
+  <div class="vs-body">
+    <span class="vs-funktion">${v.funktion}</span>
+    <h3>${v.name}</h3>
+    <div class="vs-seit">im Amt seit ${v.seit}</div>
+    <div class="vs-kontakt">
+      ${v.telefon ? `<a href="tel:${v.telefon.replace(/\s/g,'')}">📞 ${v.telefon}</a>` : ''}
+      ${v.email   ? `<a href="mailto:${v.email}">✉️ ${v.email}</a>` : ''}
+    </div>
+  </div>
+</div>`;
+    }).join('');
+
+    /* Stagger */
+    var cards = grid.querySelectorAll('.vs-card');
+    var co = new IntersectionObserver(function (obs) {
+      obs.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var i = Array.from(cards).indexOf(entry.target);
+        setTimeout(function () {
+          entry.target.style.opacity   = '1';
+          entry.target.style.transform = 'none';
+        }, i * 80);
+        co.unobserve(entry.target);
+      });
+    }, { threshold: 0.06 });
+    cards.forEach(function (c) {
+      c.style.opacity   = '0';
+      c.style.transform = 'translateY(14px)';
+      c.style.transition = 'opacity .5s ease, transform .5s ease';
+      co.observe(c);
+    });
+  });
+  </script>
+</body>
+</html>
